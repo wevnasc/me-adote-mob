@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">me-adote-mob</string>
+    <string name="error_email_not_valid">email not valid</string>
+    <string name="error_password_not_valid">Password not valid</string>
 </resources>

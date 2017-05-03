@@ -1,38 +1,25 @@
 package com.wnascimento.com.me_adote_mob.domain;
 
-public abstract class UseCase<T extends UseCase.Request, R extends UseCase.Response> {
+import io.reactivex.Flowable;
+import io.reactivex.Scheduler;
 
-    private UseCase.Callback callback;
+public abstract class UseCase<T> {
 
-    private T request;
+    private final Scheduler threadExecutor;
+    private final Scheduler threadUi;
 
-    public void setRequest(T request) {
-        this.request = request;
+    protected UseCase(Scheduler threadExecutor, Scheduler threadUi) {
+        this.threadExecutor = threadExecutor;
+        this.threadUi = threadUi;
     }
 
-    public Callback<R> getCallback() {
-        return callback;
+    public Flowable<T> run(Params params) {
+        return buildUseCase(params)
+                .observeOn(threadUi)
+                .subscribeOn(threadExecutor);
+
     }
 
-    public void setCallback(Callback callback) {
-        this.callback = callback;
-    }
+    protected abstract Flowable<T> buildUseCase(Params params);
 
-    public void run() {
-        execute(request);
-    }
-
-    protected abstract void execute(T req);
-
-    public interface Request {
-    }
-
-    public interface Response {
-    }
-
-    public interface Callback<R> {
-        void onSuccess(R response);
-
-        void onError();
-    }
 }

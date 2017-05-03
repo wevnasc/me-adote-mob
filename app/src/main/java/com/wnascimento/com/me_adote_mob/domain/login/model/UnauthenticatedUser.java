@@ -1,10 +1,7 @@
-package com.wnascimento.com.me_adote_mob.domain.login.entity;
+package com.wnascimento.com.me_adote_mob.domain.login.model;
 
-/**
- * Created by autodoc on 02/05/17.
- */
 
-public class NotFoundUser implements User {
+public class UnauthenticatedUser implements Authenticable {
     @Override
     public String getEmail() {
         return "";

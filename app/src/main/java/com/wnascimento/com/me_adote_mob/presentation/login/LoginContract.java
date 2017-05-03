@@ -6,13 +6,13 @@ import com.wnascimento.com.me_adote_mob.presentation.BaseView;
 public interface LoginContract {
 
     interface View extends BaseView<Presenter> {
-        void message(String message);
+        void showMessageUserNotFound();
 
         void showMessageEmailNotValid();
 
         void showMessagePasswordNotValid();
 
-        void showPets();
+        void goToPets();
     }
 
     interface Presenter extends BasePresenter {

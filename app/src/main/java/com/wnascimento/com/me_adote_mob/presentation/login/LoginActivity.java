@@ -1,19 +1,22 @@
 package com.wnascimento.com.me_adote_mob.presentation.login;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.wnascimento.com.me_adote_mob.R;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View{
 
+    private TextInputLayout textInputEmail;
+    private TextInputLayout textInputPassword;
     private EditText editEmail;
     private EditText editPassword;
-    private Button buttonLogin;
+    private ImageButton buttonLogin;
 
     private LoginContract.Presenter loginPresenter;
 
@@ -27,9 +30,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     private void initFields() {
-        editEmail = (EditText) findViewById(R.id.editEmail);
-        editPassword = (EditText) findViewById(R.id.editPassword);
-        buttonLogin = (Button) findViewById(R.id.buttonLogin);
+        textInputEmail = (TextInputLayout) findViewById(R.id.text_input_email);
+        textInputPassword = (TextInputLayout) findViewById(R.id.text_input_password);
+        editEmail = (EditText) findViewById(R.id.edit_email);
+        editPassword = (EditText) findViewById(R.id.edit_password);
+        buttonLogin = (ImageButton) findViewById(R.id.button_login);
     }
 
     private void initListeners() {
@@ -42,22 +47,22 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     @Override
-    public void message(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void showMessageUserNotFound() {
+        Toast.makeText(this, getString(R.string.error_user_not_found), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showMessageEmailNotValid() {
-        editEmail.setError(getString(R.string.error_email_not_valid));
+        textInputEmail.setError(getString(R.string.error_email_not_valid));
     }
 
     @Override
     public void showMessagePasswordNotValid() {
-        editPassword.setError(getString(R.string.error_password_not_valid));
+        textInputPassword.setError(getString(R.string.error_password_not_valid));
     }
 
     @Override
-    public void showPets() {
+    public void goToPets() {
         Toast.makeText(this, "pets open", Toast.LENGTH_SHORT).show();
     }
 

@@ -1,21 +1,20 @@
 package com.wnascimento.com.me_adote_mob.presentation.login;
 
-import com.wnascimento.com.me_adote_mob.domain.UseCase;
-import com.wnascimento.com.me_adote_mob.domain.UseCaseHandler;
-import com.wnascimento.com.me_adote_mob.domain.login.entity.RegisteredUser;
-import com.wnascimento.com.me_adote_mob.domain.login.entity.User;
-import com.wnascimento.com.me_adote_mob.domain.login.usecase.LoginUseCase;
+import com.wnascimento.com.me_adote_mob.domain.Params;
+import com.wnascimento.com.me_adote_mob.domain.login.interactor.LoginUserUseCase;
+import com.wnascimento.com.me_adote_mob.domain.login.model.Authenticable;
+import com.wnascimento.com.me_adote_mob.domain.login.model.User;
+
+import io.reactivex.subscribers.DisposableSubscriber;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
     private final LoginContract.View loginView;
-    private final LoginUseCase loginUseCase;
-    private final UseCaseHandler handler;
+    private final LoginUserUseCase loginUseCase;
 
-    public LoginPresenter(LoginContract.View loginView, LoginUseCase loginUseCase, UseCaseHandler handler) {
+    public LoginPresenter(LoginContract.View loginView, LoginUserUseCase loginUseCase) {
         this.loginView = loginView;
         this.loginUseCase = loginUseCase;
-        this.handler = handler;
         this.loginView.attachPresenter(this);
     }
 
@@ -31,30 +30,44 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login(String email, String password) {
-        User user = new RegisteredUser(email, password);
+        Authenticable user = new User(email, password);
 
         if (!user.hasEmail()) {
             loginView.showMessageEmailNotValid();
+            return;
         }
         if (!user.hasPassword()) {
             loginView.showMessagePasswordNotValid();
+            return;
         }
 
-        if (user.hasEmail() && user.hasPassword()) {
-
-            handler.execute(loginUseCase, new LoginUseCase.Request(user), new UseCase.Callback<LoginUseCase.Response>() {
-                @Override
-                public void onSuccess(LoginUseCase.Response response) {
-                    loginView.showPets();
-                }
-
-                @Override
-                public void onError() {
-                    loginView.message("Could not login");
-                }
-            });
-
-        }
-
+        Params params = Params.create();
+        params.put(LoginUserUseCase.PARAMS_KEY_EMAIL, email);
+        params.put(LoginUserUseCase.PARAMS_KEY_PASSWORD, password);
+        loginUseCase.run(params).subscribeWith(new LoginUserObservable());
     }
+
+
+    public class LoginUserObservable extends DisposableSubscriber<Boolean> {
+
+        @Override
+        public void onNext(Boolean authenticated) {
+            if (authenticated) {
+                loginView.goToPets();
+            } else {
+                loginView.showMessageUserNotFound();
+            }
+        }
+
+        @Override
+        public void onError(Throwable t) {
+            loginView.showMessageUserNotFound();
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    }
+
 }

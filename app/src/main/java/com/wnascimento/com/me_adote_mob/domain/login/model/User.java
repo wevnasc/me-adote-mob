@@ -1,11 +1,11 @@
-package com.wnascimento.com.me_adote_mob.domain.login.entity;
+package com.wnascimento.com.me_adote_mob.domain.login.model;
 
-public class RegisteredUser implements User {
+public class User implements Authenticable {
 
     private final String email;
     private final String password;
 
-    public RegisteredUser(String email, String password) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
@@ -36,11 +36,19 @@ public class RegisteredUser implements User {
     }
 
     @Override
+    public String toString() {
+        return "User{" +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RegisteredUser user = (RegisteredUser) o;
+        User user = (User) o;
 
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         return password != null ? password.equals(user.password) : user.password == null;

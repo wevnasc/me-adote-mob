@@ -1,15 +1,13 @@
-package com.wnascimento.com.me_adote_mob.presentation;
+package com.wnascimento.com.me_adote_mob.presentation.login;
 
-import com.wnascimento.com.me_adote_mob.domain.Params;
-import com.wnascimento.com.me_adote_mob.domain.login.interactor.LoginUserUseCase;
-import com.wnascimento.com.me_adote_mob.presentation.login.LoginContract;
-import com.wnascimento.com.me_adote_mob.presentation.login.LoginPresenter;
+import com.wnascimento.com.me_adote_mob.domain.contract.Params;
+import com.wnascimento.com.me_adote_mob.domain.login.interactor.LoginUserFlowableUseCase;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -19,7 +17,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class LoginPresenterTest {
 
     @Mock
-    private LoginUserUseCase loginUserUseCase;
+    private LoginUserFlowableUseCase loginUserUseCase;
 
     @Mock
     private LoginContract.View loginView;
@@ -37,7 +35,7 @@ public class LoginPresenterTest {
     public void loginOpenPetsSuccess() throws Exception {
 
         when(loginUserUseCase.run(any(Params.class)))
-                .thenReturn(Flowable.just(true));
+                .thenReturn(Single.just(true));
 
         loginPresenter.login("EMAIL", "PASSWORD");
 
@@ -62,7 +60,7 @@ public class LoginPresenterTest {
     @Test
     public void loginShowMessageFail() throws Exception {
         when(loginUserUseCase.run(any(Params.class)))
-                .thenReturn(Flowable.error(new Exception("ERROR")));
+                .thenReturn(Single.error(new Exception("ERROR")));
 
         loginPresenter.login("EMAIL", "PASSWORD");
 

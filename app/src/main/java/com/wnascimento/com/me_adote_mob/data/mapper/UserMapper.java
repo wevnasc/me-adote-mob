@@ -5,7 +5,7 @@ import com.wnascimento.com.me_adote_mob.domain.login.model.User;
 
 public class UserMapper {
 
-    public static UserEntity transform(User user) {
+    public static UserEntity toUser(User user) {
         return new UserEntity(user.getEmail(), user.getPassword());
     }
 

@@ -7,4 +7,7 @@
     <string name="login_edit_email">Email</string>
     <string name="login_edit_password">Password</string>
     <string name="login_button_login">Login</string>
+    <string name="timeline_pet_image">pet image</string>
+    <string name="demonstration_name">Name</string>
+    <string name="demonstration_loren_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eleifend dolor in purus consequat dictum. Morbi sed dui vel metus.</string>
 </resources>

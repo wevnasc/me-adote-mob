@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.wnascimento.com.me_adote_mob.R;
+import com.wnascimento.com.me_adote_mob.presentation.timeline.TimelineActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View{
 
@@ -42,6 +43,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        loginPresenter.close();
+    }
+
+    @Override
     public void attachPresenter(LoginContract.Presenter presenter) {
         loginPresenter = presenter;
     }
@@ -63,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void goToPets() {
-        Toast.makeText(this, "pets open", Toast.LENGTH_SHORT).show();
+        startActivity(TimelineActivity.startIntent(this));
     }
 
     private final class OnClickLogin implements View.OnClickListener {

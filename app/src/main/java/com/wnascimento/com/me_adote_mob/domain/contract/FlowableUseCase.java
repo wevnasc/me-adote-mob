@@ -1,14 +1,14 @@
-package com.wnascimento.com.me_adote_mob.domain;
+package com.wnascimento.com.me_adote_mob.domain.contract;
 
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 
-public abstract class UseCase<T> {
+public abstract class FlowableUseCase<T> {
 
     private final Scheduler threadExecutor;
     private final Scheduler threadUi;
 
-    protected UseCase(Scheduler threadExecutor, Scheduler threadUi) {
+    protected FlowableUseCase(Scheduler threadExecutor, Scheduler threadUi) {
         this.threadExecutor = threadExecutor;
         this.threadUi = threadUi;
     }

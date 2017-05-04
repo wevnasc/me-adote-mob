@@ -10,8 +10,7 @@ import com.wnascimento.com.me_adote_mob.domain.login.model.User;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public class UserFakeRepository implements UserRepository {
 
@@ -28,20 +27,20 @@ public class UserFakeRepository implements UserRepository {
     }
 
     @Override
-    public Flowable<Authenticable> login(Authenticable user) {
-        return Flowable.create(flowableEmitter -> {
-            UserEntity userEntity = UserMapper.transform((User) user);
+    public Single<Authenticable> login(Authenticable user) {
+
+        return Single.create(source -> {
+            UserEntity userEntity = UserMapper.toUser((User) user);
             try {
                 if (userStruct.containsValue(userEntity)) {
-                    flowableEmitter.onNext(user);
+                    source.onSuccess(user);
                 } else {
-                    flowableEmitter.onNext(new UnauthenticatedUser());
+                    source.onSuccess(new UnauthenticatedUser());
                 }
-                flowableEmitter.onComplete();
             } catch (Exception e) {
-                flowableEmitter.onError(e);
+                source.onError(e);
             }
-        }, BackpressureStrategy.BUFFER);
+        });
 
     }
 }

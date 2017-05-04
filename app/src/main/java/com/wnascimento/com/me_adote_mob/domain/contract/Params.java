@@ -1,4 +1,4 @@
-package com.wnascimento.com.me_adote_mob.domain;
+package com.wnascimento.com.me_adote_mob.domain.contract;
 
 import android.support.annotation.NonNull;
 

@@ -2,7 +2,7 @@ package com.wnascimento.com.me_adote_mob.domain.login.interactor;
 
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.UserRepository;
 import com.wnascimento.com.me_adote_mob.domain.ImmediateScheduler;
-import com.wnascimento.com.me_adote_mob.domain.Params;
+import com.wnascimento.com.me_adote_mob.domain.contract.Params;
 import com.wnascimento.com.me_adote_mob.domain.login.model.Authenticable;
 import com.wnascimento.com.me_adote_mob.domain.login.model.UnauthenticatedUser;
 import com.wnascimento.com.me_adote_mob.domain.login.model.User;
@@ -12,10 +12,10 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.TestSubscriber;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -25,46 +25,47 @@ public class LoginUserCaseTest {
 
     @ClassRule
     public static final ImmediateScheduler schedulers = new ImmediateScheduler();
+
     @Mock
     private UserRepository userRepository;
-    private LoginUserUseCase loginUseCase;
+    private LoginUserFlowableUseCase loginUseCase;
 
     @Before
     public void init() {
         initMocks(this);
-        loginUseCase = new LoginUserUseCase(Schedulers.newThread(), AndroidSchedulers.mainThread(), userRepository);
+        loginUseCase = new LoginUserFlowableUseCase(Schedulers.newThread(), AndroidSchedulers.mainThread(), userRepository);
     }
 
     @Test
     public void shouldReturnUserNotFoundIfEmailAndPasswordNotFound() {
-        TestSubscriber<Boolean> testSubscriber = TestSubscriber.create();
+        TestObserver<Boolean> testObserver = TestObserver.create();
         Params params = Params.create();
-        params.put(LoginUserUseCase.PARAMS_KEY_EMAIL, "");
-        params.put(LoginUserUseCase.PARAMS_KEY_PASSWORD, "");
+        params.put(LoginUserFlowableUseCase.PARAMS_KEY_EMAIL, "");
+        params.put(LoginUserFlowableUseCase.PARAMS_KEY_PASSWORD, "");
 
         Authenticable user = new UnauthenticatedUser();
-        when(userRepository.login(any(Authenticable.class))).thenReturn(Flowable.just(user));
-        loginUseCase.run(params).subscribe(testSubscriber);
+        when(userRepository.login(any(Authenticable.class))).thenReturn(Single.just(user));
+        loginUseCase.run(params).subscribe(testObserver);
 
-        testSubscriber.assertNoErrors();
-        testSubscriber.assertComplete();
-        testSubscriber.assertValue(false);
+        testObserver.assertNoErrors();
+        testObserver.assertComplete();
+        testObserver.assertValue(false);
     }
 
     @Test
     public void shouldReturnUserRegisteredIfUserFound() {
-        TestSubscriber<Boolean> testSubscriber = new TestSubscriber<>();
+        TestObserver<Boolean> testObserver = TestObserver.create();
         Params params = Params.create();
-        params.put(LoginUserUseCase.PARAMS_KEY_EMAIL, "EMAIL");
-        params.put(LoginUserUseCase.PARAMS_KEY_PASSWORD, "PASSWORD");
+        params.put(LoginUserFlowableUseCase.PARAMS_KEY_EMAIL, "EMAIL");
+        params.put(LoginUserFlowableUseCase.PARAMS_KEY_PASSWORD, "PASSWORD");
 
         Authenticable user = new User("EMAIL", "PASSWORD");
-        when(userRepository.login(any(Authenticable.class))).thenReturn(Flowable.just(user));
-        loginUseCase.run(params).subscribe(testSubscriber);
+        when(userRepository.login(any(Authenticable.class))).thenReturn(Single.just(user));
+        loginUseCase.run(params).subscribe(testObserver);
 
-        testSubscriber.assertNoErrors();
-        testSubscriber.assertComplete();
-        testSubscriber.assertValue(true);
+        testObserver.assertNoErrors();
+        testObserver.assertComplete();
+        testObserver.assertValue(true);
 
 
     }

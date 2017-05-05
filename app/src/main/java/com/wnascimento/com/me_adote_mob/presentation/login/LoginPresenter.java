@@ -1,9 +1,9 @@
 package com.wnascimento.com.me_adote_mob.presentation.login;
 
 import com.wnascimento.com.me_adote_mob.domain.contract.Params;
-import com.wnascimento.com.me_adote_mob.domain.login.interactor.LoginUserFlowableUseCase;
-import com.wnascimento.com.me_adote_mob.domain.login.model.Authenticable;
-import com.wnascimento.com.me_adote_mob.domain.login.model.User;
+import com.wnascimento.com.me_adote_mob.domain.owner.interactor.LoginUserFlowableUseCase;
+import com.wnascimento.com.me_adote_mob.domain.owner.model.Authenticable;
+import com.wnascimento.com.me_adote_mob.domain.user.model.User;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;

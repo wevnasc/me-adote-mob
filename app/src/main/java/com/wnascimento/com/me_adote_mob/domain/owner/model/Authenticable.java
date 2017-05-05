@@ -1,10 +1,7 @@
-package com.wnascimento.com.me_adote_mob.domain.login.model;
-
-/**
- * Created by autodoc on 02/05/17.
- */
+package com.wnascimento.com.me_adote_mob.domain.owner.model;
 
 public interface Authenticable {
+
     String getEmail();
 
     String getPassword();
@@ -14,4 +11,5 @@ public interface Authenticable {
     boolean hasPassword();
 
     boolean isLogged();
+
 }

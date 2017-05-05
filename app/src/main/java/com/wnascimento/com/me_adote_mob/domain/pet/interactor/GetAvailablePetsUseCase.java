@@ -1,16 +1,14 @@
-package com.wnascimento.com.me_adote_mob.domain.timeline.interactor;
+package com.wnascimento.com.me_adote_mob.domain.pet.interactor;
 
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.PetRepository;
 import com.wnascimento.com.me_adote_mob.domain.contract.FlowableUseCase;
 import com.wnascimento.com.me_adote_mob.domain.contract.Params;
-import com.wnascimento.com.me_adote_mob.domain.timeline.model.AvailablePet;
-
-import java.util.Collections;
+import com.wnascimento.com.me_adote_mob.domain.pet.model.Pet;
 
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 
-public class GetAvailablePetsUseCase extends FlowableUseCase<AvailablePet> {
+public class GetAvailablePetsUseCase extends FlowableUseCase<Pet> {
 
     private final PetRepository petRepository;
 
@@ -20,9 +18,8 @@ public class GetAvailablePetsUseCase extends FlowableUseCase<AvailablePet> {
     }
 
     @Override
-    protected Flowable<AvailablePet> buildUseCase(Params params) {
-        return this.petRepository.getAvailablePets()
-                .sorted(Collections.reverseOrder((p1, p2) -> p1.getCreatedAt().compareTo(p2.getCreatedAt())));
+    protected Flowable<Pet> buildUseCase(Params params) {
+        return this.petRepository.getAvailablePets();
     }
 
 }

@@ -14,7 +14,9 @@
         <activity android:name=".presentation.login.LoginActivity">
 
         </activity>
-        <activity android:name=".presentation.timeline.TimelineActivity">
+        <activity
+            android:name=".presentation.timeline.TimelineActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

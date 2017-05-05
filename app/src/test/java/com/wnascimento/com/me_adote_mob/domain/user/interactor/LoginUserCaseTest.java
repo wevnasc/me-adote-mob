@@ -1,11 +1,12 @@
-package com.wnascimento.com.me_adote_mob.domain.login.interactor;
+package com.wnascimento.com.me_adote_mob.domain.user.interactor;
 
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.UserRepository;
 import com.wnascimento.com.me_adote_mob.domain.ImmediateScheduler;
 import com.wnascimento.com.me_adote_mob.domain.contract.Params;
-import com.wnascimento.com.me_adote_mob.domain.login.model.Authenticable;
-import com.wnascimento.com.me_adote_mob.domain.login.model.UnauthenticatedUser;
-import com.wnascimento.com.me_adote_mob.domain.login.model.User;
+import com.wnascimento.com.me_adote_mob.domain.owner.interactor.LoginUserFlowableUseCase;
+import com.wnascimento.com.me_adote_mob.domain.owner.model.Authenticable;
+import com.wnascimento.com.me_adote_mob.domain.owner.model.UnauthenticatedOwner;
+import com.wnascimento.com.me_adote_mob.domain.user.model.User;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -43,7 +44,7 @@ public class LoginUserCaseTest {
         params.put(LoginUserFlowableUseCase.PARAMS_KEY_EMAIL, "");
         params.put(LoginUserFlowableUseCase.PARAMS_KEY_PASSWORD, "");
 
-        Authenticable user = new UnauthenticatedUser();
+        Authenticable user = new UnauthenticatedOwner();
         when(userRepository.login(any(Authenticable.class))).thenReturn(Single.just(user));
         loginUseCase.run(params).subscribe(testObserver);
 

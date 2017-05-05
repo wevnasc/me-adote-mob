@@ -1,8 +1,8 @@
 package com.wnascimento.com.me_adote_mob.presentation.timeline;
 
 import com.wnascimento.com.me_adote_mob.domain.contract.Params;
-import com.wnascimento.com.me_adote_mob.domain.timeline.interactor.GetAvailablePetsUseCase;
-import com.wnascimento.com.me_adote_mob.domain.timeline.model.AvailablePet;
+import com.wnascimento.com.me_adote_mob.domain.pet.interactor.GetAvailablePetsUseCase;
+import com.wnascimento.com.me_adote_mob.domain.pet.model.Pet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +42,7 @@ public class TimelinePresenterTest {
         timelinePresenter.getAvailablePets();
 
         verify(getAvailablePetsUseCase).run(any(Params.class));
-        verify(timelineView, atMost(3)).updateTimeline(any(AvailablePet.class));
+        verify(timelineView, atMost(3)).updateTimeline(any(Pet.class));
     }
 
     @Test
@@ -54,11 +54,8 @@ public class TimelinePresenterTest {
         verify(timelineView).showLoadError();
     }
 
-    private List<AvailablePet> getAvailablePets() {
-        List<AvailablePet> pets = new ArrayList<>();
-        pets.add(new AvailablePet("1", "NAME-1", "IMAGE-1", "NOTE-1", 1493909578L));
-        pets.add(new AvailablePet("2", "NAME-2", "IMAGE-2", "NOTE-2", 1493909590L));
-        pets.add(new AvailablePet("3", "NAME-3", "IMAGE-3", "NOTE-3", 1493909595L));
+    private List<Pet> getAvailablePets() {
+        List<Pet> pets = new ArrayList<>();
         return pets;
     }
 }

@@ -1,10 +1,8 @@
-package com.wnascimento.com.me_adote_mob.domain.login.interactor;
+package com.wnascimento.com.me_adote_mob.domain.owner.interactor;
 
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.UserRepository;
 import com.wnascimento.com.me_adote_mob.domain.contract.Params;
 import com.wnascimento.com.me_adote_mob.domain.contract.SingleUseCase;
-import com.wnascimento.com.me_adote_mob.domain.login.model.Authenticable;
-import com.wnascimento.com.me_adote_mob.domain.login.model.User;
 
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
@@ -23,8 +21,6 @@ public class LoginUserFlowableUseCase extends SingleUseCase<Boolean> {
 
     @Override
     protected Single<Boolean> buildUseCase(Params params) {
-        Authenticable user = new User(params.getString(PARAMS_KEY_EMAIL, ""),
-                params.getString(PARAMS_KEY_PASSWORD, ""));
-        return userRepository.login(user).map(Authenticable::isLogged);
+        return null;
     }
 }

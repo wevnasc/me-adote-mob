@@ -1,7 +1,7 @@
 package com.wnascimento.com.me_adote_mob.presentation.login;
 
 import com.wnascimento.com.me_adote_mob.data.repository.fake.UserFakeRepository;
-import com.wnascimento.com.me_adote_mob.domain.login.interactor.LoginUserFlowableUseCase;
+import com.wnascimento.com.me_adote_mob.domain.owner.interactor.LoginUserFlowableUseCase;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

@@ -8,18 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.wnascimento.com.me_adote_mob.R;
-import com.wnascimento.com.me_adote_mob.domain.timeline.model.AvailablePet;
+import com.wnascimento.com.me_adote_mob.domain.pet.model.Pet;
+import com.wnascimento.com.me_adote_mob.presentation.util.ImageHelper;
 
 import java.util.List;
 
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHolder> {
 
-    private List<AvailablePet> timeline;
+    private List<Pet> timeline;
 
-    public TimelineAdapter(List<AvailablePet> timeline) {
+    public TimelineAdapter(List<Pet> timeline) {
         this.timeline = timeline;
     }
 
@@ -34,16 +33,16 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        AvailablePet availablePet = timeline.get(position);
-        holder.textName.setText(availablePet.getName());
-        holder.textDescription.setText(availablePet.getNotes());
+        Pet pet = timeline.get(position);
 
-        Glide.with(context)
-                .load(availablePet.getImage())
-                .crossFade(1000)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.imagePet);
+        holder.textPetName.setText(pet.getName());
+        holder.textOwnerName.setText(pet.getOwner().getName());
+        holder.textWeight.setText(String.valueOf(pet.getWeight()));
+        holder.textBreed.setText(pet.getBreed());
+        holder.textAge.setText("2 years");
+
+        ImageHelper.showImageCircle(context, holder.imageOwner, pet.getOwner().getImage());
+        ImageHelper.showImage(context, holder.imagePet, pet.getImage());
 
     }
 
@@ -52,22 +51,27 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         return timeline != null ? timeline.size() : 0;
     }
 
-    public void updateList(AvailablePet availablePet) {
-        insertItem(availablePet);
+    public void updateList(Pet pet) {
+        insertItem(pet);
     }
 
-    private void insertItem(AvailablePet availablePet) {
-        if (!timeline.contains(availablePet)) {
-            timeline.add(availablePet);
+    private void insertItem(Pet pet) {
+        if (!timeline.contains(pet)) {
+            timeline.add(pet);
             notifyItemInserted(getItemCount());
         }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textName;
-        private TextView textDescription;
+        private TextView textPetName;
+        private TextView textOwnerName;
+        private TextView textBreed;
+        private TextView textWeight;
+        private TextView textAge;
+        private ImageView imageGender;
         private ImageView imagePet;
+        private ImageView imageOwner;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -75,9 +79,15 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         }
 
         private void initComponents(View itemView) {
-            textName = (TextView) itemView.findViewById(R.id.text_name);
-            textDescription = (TextView) itemView.findViewById(R.id.text_description);
+            textPetName = (TextView) itemView.findViewById(R.id.text_pet_name);
+            textOwnerName = (TextView) itemView.findViewById(R.id.text_owner_name);
+            textBreed = (TextView) itemView.findViewById(R.id.text_breed);
+            textWeight = (TextView) itemView.findViewById(R.id.text_weight);
+            textAge = (TextView) itemView.findViewById(R.id.text_age);
+
+            imageGender = (ImageView) itemView.findViewById(R.id.image_gender);
             imagePet = (ImageView) itemView.findViewById(R.id.image_pet);
+            imageOwner = (ImageView) itemView.findViewById(R.id.image_owner);
         }
     }
 }

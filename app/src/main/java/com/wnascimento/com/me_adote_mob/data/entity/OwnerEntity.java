@@ -1,12 +1,17 @@
 package com.wnascimento.com.me_adote_mob.data.entity;
 
-public class UserEntity {
+public class OwnerEntity {
 
     private String id;
+    private String name;
+    private String image;
     private String email;
     private String password;
 
-    public UserEntity(String email, String password) {
+    public OwnerEntity(String id, String name, String image, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
         this.email = email;
         this.password = password;
     }
@@ -17,6 +22,22 @@ public class UserEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getEmail() {
@@ -40,7 +61,7 @@ public class UserEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserEntity that = (UserEntity) o;
+        OwnerEntity that = (OwnerEntity) o;
 
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         return password != null ? password.equals(that.password) : that.password == null;

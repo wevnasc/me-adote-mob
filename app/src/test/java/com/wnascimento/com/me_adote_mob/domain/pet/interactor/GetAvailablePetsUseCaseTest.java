@@ -1,10 +1,10 @@
-package com.wnascimento.com.me_adote_mob.domain.timeline.interactor;
+package com.wnascimento.com.me_adote_mob.domain.pet.interactor;
 
 
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.PetRepository;
 import com.wnascimento.com.me_adote_mob.domain.ImmediateScheduler;
 import com.wnascimento.com.me_adote_mob.domain.contract.Params;
-import com.wnascimento.com.me_adote_mob.domain.timeline.model.AvailablePet;
+import com.wnascimento.com.me_adote_mob.domain.pet.model.Pet;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -40,18 +40,14 @@ public class GetAvailablePetsUseCaseTest {
 
     @Test
     public void shouldReturnAllAvailablePetInOrderDescWithRandomDateCreated() {
-        List<AvailablePet> pets = new ArrayList<>();
-        pets.add(new AvailablePet("1", "NAME-1", "IMAGE-1", "NOTE-1", 1493907390L));
-        pets.add(new AvailablePet("2", "NAME-2", "IMAGE-2", "NOTE-2", 1493906510L));
-        pets.add(new AvailablePet("3", "NAME-3", "IMAGE-3", "NOTE-3", 1493907454L));
+        List<Pet> pets = new ArrayList<>();
 
-        TestSubscriber<AvailablePet> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<Pet> testSubscriber = new TestSubscriber<>();
         when(petRepository.getAvailablePets()).thenReturn(Flowable.fromIterable(pets));
 
         getAvailablePetsUseCase.run(Params.create()).subscribe(testSubscriber);
 
         testSubscriber.assertNoErrors();
-        testSubscriber.assertValueAt(0, expected -> expected.getId().equals(pets.get(2).getId()));
 
     }
 }

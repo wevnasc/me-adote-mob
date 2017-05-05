@@ -6,29 +6,31 @@ public class PetEntity {
     private String name;
     private String image;
     private String breed;
-    private String gender;
+    private int gender;
     private String notes;
-    private int age;
+    private long dateBirth;
     private boolean adopted;
     private double weight;
     private double height;
     private long createdAt;
+    private OwnerEntity ownerEntity;
 
 
-    public PetEntity(String id, String name, String image, String breed, String gender,
-                     String notes, int age, boolean adopted, double weight, double height,
-                     long createdAt) {
+    public PetEntity(String id, String name, String image, String breed, int gender,
+                     String notes, long dateBirth, boolean adopted, double weight,
+                     double height, long createdAt, OwnerEntity ownerEntity) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.breed = breed;
         this.gender = gender;
         this.notes = notes;
-        this.age = age;
+        this.dateBirth = dateBirth;
         this.adopted = adopted;
         this.weight = weight;
         this.height = height;
         this.createdAt = createdAt;
+        this.ownerEntity = ownerEntity;
     }
 
     public String getId() {
@@ -63,11 +65,11 @@ public class PetEntity {
         this.breed = breed;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -79,12 +81,12 @@ public class PetEntity {
         this.notes = notes;
     }
 
-    public int getAge() {
-        return age;
+    public long getDateBith() {
+        return dateBirth;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDateBirth(int dateBirth) {
+        this.dateBirth = dateBirth;
     }
 
     public boolean isAdopted() {
@@ -119,19 +121,38 @@ public class PetEntity {
         this.createdAt = createdAt;
     }
 
+    public long getDateBirth() {
+        return dateBirth;
+    }
+
+    public PetEntity setDateBirth(long dateBirth) {
+        this.dateBirth = dateBirth;
+        return this;
+    }
+
+    public OwnerEntity getOwnerEntity() {
+        return ownerEntity;
+    }
+
+    public PetEntity setOwnerEntity(OwnerEntity ownerEntity) {
+        this.ownerEntity = ownerEntity;
+        return this;
+    }
+
     public static class Builder {
 
         private String id;
         private String image;
         private String name;
         private String breed;
-        private String gender;
+        private int gender;
         private String notes;
-        private int age;
+        private long dateBirth;
         private boolean adopted;
         private double weight;
         private double height;
         private long createdAt;
+        private OwnerEntity ownerEntity;
 
         public Builder setId(String id) {
             this.id = id;
@@ -153,7 +174,7 @@ public class PetEntity {
             return this;
         }
 
-        public Builder setGender(String gender) {
+        public Builder setGender(int gender) {
             this.gender = gender;
             return this;
         }
@@ -163,8 +184,8 @@ public class PetEntity {
             return this;
         }
 
-        public Builder setAge(int age) {
-            this.age = age;
+        public Builder setDateBirth(long dateBirth) {
+            this.dateBirth = dateBirth;
             return this;
         }
 
@@ -188,9 +209,14 @@ public class PetEntity {
             return this;
         }
 
+        public Builder setOwnerEntity(OwnerEntity ownerEntity) {
+            this.ownerEntity = ownerEntity;
+            return this;
+        }
+
         public PetEntity build() {
             return new PetEntity(this.id, this.name, this.image, this.breed, this.gender,
-                    this.notes, this.age, this.adopted, this.weight, this.height, this.createdAt);
+                    this.notes, this.dateBirth, this.adopted, this.weight, this.height, this.createdAt, ownerEntity);
         }
 
     }

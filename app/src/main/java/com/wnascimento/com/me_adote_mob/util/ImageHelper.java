@@ -1,4 +1,4 @@
-package com.wnascimento.com.me_adote_mob.presentation.util;
+package com.wnascimento.com.me_adote_mob.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

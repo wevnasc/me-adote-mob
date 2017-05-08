@@ -1,12 +1,11 @@
-package com.wnascimento.com.me_adote_mob.domain.user.interactor;
+package com.wnascimento.com.me_adote_mob.domain.owner.interactor;
 
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.UserRepository;
+import com.wnascimento.com.me_adote_mob.data.repository.contracts.IOwnerRepository;
 import com.wnascimento.com.me_adote_mob.domain.ImmediateScheduler;
 import com.wnascimento.com.me_adote_mob.domain.contract.Params;
-import com.wnascimento.com.me_adote_mob.domain.owner.interactor.LoginUserFlowableUseCase;
-import com.wnascimento.com.me_adote_mob.domain.owner.model.Authenticable;
-import com.wnascimento.com.me_adote_mob.domain.owner.model.UnauthenticatedOwner;
-import com.wnascimento.com.me_adote_mob.domain.user.model.User;
+import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
+import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
+import com.wnascimento.com.me_adote_mob.domain.owner.UnregisteredOwner;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -28,13 +27,13 @@ public class LoginUserCaseTest {
     public static final ImmediateScheduler schedulers = new ImmediateScheduler();
 
     @Mock
-    private UserRepository userRepository;
+    private IOwnerRepository ownerRepository;
     private LoginUserFlowableUseCase loginUseCase;
 
     @Before
     public void init() {
         initMocks(this);
-        loginUseCase = new LoginUserFlowableUseCase(Schedulers.newThread(), AndroidSchedulers.mainThread(), userRepository);
+        loginUseCase = new LoginUserFlowableUseCase(Schedulers.newThread(), AndroidSchedulers.mainThread(), ownerRepository);
     }
 
     @Test
@@ -44,8 +43,8 @@ public class LoginUserCaseTest {
         params.put(LoginUserFlowableUseCase.PARAMS_KEY_EMAIL, "");
         params.put(LoginUserFlowableUseCase.PARAMS_KEY_PASSWORD, "");
 
-        Authenticable user = new UnauthenticatedOwner();
-        when(userRepository.login(any(Authenticable.class))).thenReturn(Single.just(user));
+        IOwner user = new UnregisteredOwner();
+        when(ownerRepository.login(any(IOwner.class))).thenReturn(Single.just(user));
         loginUseCase.run(params).subscribe(testObserver);
 
         testObserver.assertNoErrors();
@@ -60,8 +59,8 @@ public class LoginUserCaseTest {
         params.put(LoginUserFlowableUseCase.PARAMS_KEY_EMAIL, "EMAIL");
         params.put(LoginUserFlowableUseCase.PARAMS_KEY_PASSWORD, "PASSWORD");
 
-        Authenticable user = new User("EMAIL", "PASSWORD");
-        when(userRepository.login(any(Authenticable.class))).thenReturn(Single.just(user));
+        IOwner user = new Owner("EMAIL", "PASSWORD");
+        when(ownerRepository.login(any(IOwner.class))).thenReturn(Single.just(user));
         loginUseCase.run(params).subscribe(testObserver);
 
         testObserver.assertNoErrors();

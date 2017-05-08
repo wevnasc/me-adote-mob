@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.wnascimento.com.me_adote_mob.R;
-import com.wnascimento.com.me_adote_mob.domain.pet.model.Pet;
+import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
 
 
     private void initTimeline() {
-        List<Pet> timeline = new ArrayList<>();
+        List<IPet> timeline = new ArrayList<>();
         timelineAdapter = new TimelineAdapter(timeline);
         recyclerViewTimeline.setHasFixedSize(true);
         recyclerViewTimeline.setLayoutManager(new LinearLayoutManager(this));
@@ -103,7 +103,7 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
     }
 
     @Override
-    public void updateTimeline(Pet pet) {
+    public void updateTimeline(IPet pet) {
         timelineAdapter.updateList(pet);
     }
 

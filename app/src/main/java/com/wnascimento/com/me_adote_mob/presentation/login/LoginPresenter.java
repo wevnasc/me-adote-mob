@@ -1,9 +1,9 @@
 package com.wnascimento.com.me_adote_mob.presentation.login;
 
 import com.wnascimento.com.me_adote_mob.domain.contract.Params;
+import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
+import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
 import com.wnascimento.com.me_adote_mob.domain.owner.interactor.LoginUserFlowableUseCase;
-import com.wnascimento.com.me_adote_mob.domain.owner.model.Authenticable;
-import com.wnascimento.com.me_adote_mob.domain.user.model.User;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
@@ -34,7 +34,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login(String email, String password) {
-        Authenticable user = new User(email, password);
+        IOwner user = new Owner(email, password);
 
         if (!user.hasEmail()) {
             loginView.showMessageEmailNotValid();
@@ -59,8 +59,8 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
 
         @Override
-        public void onSuccess(Boolean authenticated) {
-            if (authenticated) {
+        public void onSuccess(Boolean registered) {
+            if (registered) {
                 loginView.goToPets();
             } else {
                 loginView.showMessageUserNotFound();

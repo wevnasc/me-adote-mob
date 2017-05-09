@@ -7,17 +7,17 @@ import com.wnascimento.com.me_adote_mob.presentation.BaseView;
 
 public interface TimelineContract {
 
-    interface Presenter extends BasePresenter {
-
-        void getAvailablePets();
-
-    }
-
     interface View extends BaseView<Presenter> {
 
         void updateTimeline(IPet pet);
 
         void showLoadError();
+
+    }
+
+    interface Presenter extends BasePresenter {
+
+        void getAvailablePets();
 
     }
 

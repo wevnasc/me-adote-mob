@@ -1,5 +1,10 @@
 package com.wnascimento.com.me_adote_mob.domain.contract;
 
+import com.wnascimento.com.me_adote_mob.util.dagger.AndroidThread;
+import com.wnascimento.com.me_adote_mob.util.dagger.IoThread;
+
+import javax.inject.Inject;
+
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 

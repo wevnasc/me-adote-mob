@@ -60,4 +60,14 @@ public class Owner implements IOwner {
         return hasEmail() && hasPassword();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Owner owner = (Owner) o;
+
+        if (email != null ? !email.equals(owner.email) : owner.email != null) return false;
+        return password != null ? password.equals(owner.password) : owner.password == null;
+    }
 }

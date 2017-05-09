@@ -5,21 +5,25 @@ import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
 import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
 import com.wnascimento.com.me_adote_mob.domain.owner.interactor.LoginUserFlowableUseCase;
 
+import javax.inject.Inject;
+
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
-    private final LoginContract.View loginView;
     private final LoginUserFlowableUseCase loginUseCase;
     private final CompositeDisposable compositeDisposable;
 
-    public LoginPresenter(LoginContract.View loginView, LoginUserFlowableUseCase loginUseCase) {
-        this.loginView = loginView;
+    private LoginContract.View loginView;
+
+    @Inject
+    public LoginPresenter(LoginContract.View view, LoginUserFlowableUseCase loginUseCase) {
+        loginView = view;
         this.loginUseCase = loginUseCase;
-        this.loginView.attachPresenter(this);
         compositeDisposable = new CompositeDisposable();
+        view.attachPresenter(this);
     }
 
     @Override
@@ -31,6 +35,8 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void close() {
         compositeDisposable.clear();
     }
+
+
 
     @Override
     public void login(String email, String password) {

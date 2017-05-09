@@ -5,6 +5,10 @@ import com.wnascimento.com.me_adote_mob.domain.contract.Params;
 import com.wnascimento.com.me_adote_mob.domain.contract.SingleUseCase;
 import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
 import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
+import com.wnascimento.com.me_adote_mob.util.dagger.AndroidThread;
+import com.wnascimento.com.me_adote_mob.util.dagger.IoThread;
+
+import javax.inject.Inject;
 
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
@@ -16,7 +20,8 @@ public class LoginUserFlowableUseCase extends SingleUseCase<Boolean> {
 
     private final IOwnerRepository ownerRepository;
 
-    public LoginUserFlowableUseCase(Scheduler threadExecutor, Scheduler postExecutionThread, IOwnerRepository ownerRepository) {
+    @Inject
+    public LoginUserFlowableUseCase(@IoThread Scheduler threadExecutor, @AndroidThread Scheduler postExecutionThread, IOwnerRepository ownerRepository) {
         super(threadExecutor, postExecutionThread);
         this.ownerRepository = ownerRepository;
     }

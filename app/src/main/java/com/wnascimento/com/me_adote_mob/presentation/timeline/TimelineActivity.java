@@ -12,17 +12,22 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.wnascimento.com.me_adote_mob.MainApplication;
 import com.wnascimento.com.me_adote_mob.R;
 import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.inject.Inject;
 
 public class TimelineActivity extends AppCompatActivity implements TimelineContract.View {
 
     private RecyclerView recyclerViewTimeline;
     private TimelineAdapter timelineAdapter;
     private Toolbar toolbar;
+
+    @Inject
+    TimelinePresenter presenter;
 
     private TimelineContract.Presenter timelinePresenter;
 
@@ -34,11 +39,20 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        TimelinePresenterFactory.make(this);
 
+        initDagger();
         initComponents();
         initToolbar();
         initTimeline();
+    }
+
+    private void initDagger() {
+        DaggerTimestampComponent.builder()
+                .mainComponent(MainApplication.mainComponent)
+                .repositoryComponent(MainApplication.repositoryComponent)
+                .timelineModule(new TimelineModule(this))
+                .build()
+                .inject(this);
     }
 
     private void initComponents() {
@@ -58,10 +72,8 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
 
     }
 
-
     private void initTimeline() {
-        List<IPet> timeline = new ArrayList<>();
-        timelineAdapter = new TimelineAdapter(timeline);
+        timelineAdapter = new TimelineAdapter(new ArrayList<>());
         recyclerViewTimeline.setHasFixedSize(true);
         recyclerViewTimeline.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewTimeline.setAdapter(timelineAdapter);
@@ -81,6 +93,11 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
     }
 
     @Override
+    public void attachPresenter(TimelineContract.Presenter presenter) {
+        timelinePresenter = presenter;
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -95,11 +112,6 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         return true;
-    }
-
-    @Override
-    public void attachPresenter(TimelineContract.Presenter presenter) {
-        timelinePresenter = presenter;
     }
 
     @Override

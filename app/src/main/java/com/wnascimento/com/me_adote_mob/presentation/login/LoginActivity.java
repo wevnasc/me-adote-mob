@@ -8,10 +8,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.wnascimento.com.me_adote_mob.MainApplication;
 import com.wnascimento.com.me_adote_mob.R;
 import com.wnascimento.com.me_adote_mob.presentation.timeline.TimelineActivity;
 
-public class LoginActivity extends AppCompatActivity implements LoginContract.View{
+import javax.inject.Inject;
+
+public class LoginActivity extends AppCompatActivity implements LoginContract.View {
 
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputPassword;
@@ -19,15 +22,27 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private EditText editPassword;
     private ImageButton buttonLogin;
 
+    @Inject
+    LoginPresenter presenter;
+
     private LoginContract.Presenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginPresenter = new LoginPresenterFactory().make(this);
+        initDagger();
         initFields();
         initListeners();
+    }
+
+    private void initDagger() {
+        DaggerLoginComponent.builder()
+                .mainComponent(MainApplication.mainComponent)
+                .repositoryComponent(MainApplication.repositoryComponent)
+                .loginModule(new LoginModule(this))
+                .build()
+                .inject(this);
     }
 
     private void initFields() {
@@ -72,6 +87,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void goToPets() {
         startActivity(TimelineActivity.startIntent(this));
     }
+
 
     private final class OnClickLogin implements View.OnClickListener {
 

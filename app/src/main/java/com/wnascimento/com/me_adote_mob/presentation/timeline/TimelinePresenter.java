@@ -3,20 +3,22 @@ package com.wnascimento.com.me_adote_mob.presentation.timeline;
 import com.wnascimento.com.me_adote_mob.domain.contract.Params;
 import com.wnascimento.com.me_adote_mob.domain.pet.interactor.GetAvailablePetsUseCase;
 
+import javax.inject.Inject;
+
 import io.reactivex.disposables.CompositeDisposable;
 
 public class TimelinePresenter implements TimelineContract.Presenter {
 
-    private final TimelineContract.View timelineView;
+    private TimelineContract.View timelineView;
     private final GetAvailablePetsUseCase getAvailablePetsUseCase;
-    private CompositeDisposable compositeDisposable;
+    private final CompositeDisposable compositeDisposable;
 
-    public TimelinePresenter(TimelineContract.View timelineView, GetAvailablePetsUseCase getAvailablePetsUseCase) {
-        this.timelineView = timelineView;
+    @Inject
+    public TimelinePresenter(TimelineContract.View view, GetAvailablePetsUseCase getAvailablePetsUseCase) {
+        timelineView = view;
         this.getAvailablePetsUseCase = getAvailablePetsUseCase;
-
-        timelineView.attachPresenter(this);
         compositeDisposable = new CompositeDisposable();
+        view.attachPresenter(this);
     }
 
     @Override
@@ -31,9 +33,6 @@ public class TimelinePresenter implements TimelineContract.Presenter {
     @Override
     public void getAvailablePets() {
         compositeDisposable.add(getAvailablePetsUseCase.run(Params.create())
-                .subscribe(timelineView::updateTimeline, e -> {
-                    timelineView.showLoadError();
-                }, () -> {
-                }));
+                .subscribe(timelineView::updateTimeline, e -> timelineView.showLoadError(), () -> {}));
     }
 }

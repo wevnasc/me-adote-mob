@@ -39,7 +39,7 @@
     <string name="action_save">Save</string>
     <string-array name="gender">
         <item>Gender</item>
-        <item>Male</item>
-        <item>Female</item>
+        <item value="0" >Male</item>
+        <item >Female</item>
     </string-array>
 </resources>

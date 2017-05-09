@@ -1,6 +1,5 @@
 package com.wnascimento.com.me_adote_mob.presentation.timeline;
 
-import com.wnascimento.com.me_adote_mob.domain.contract.Params;
 import com.wnascimento.com.me_adote_mob.domain.pet.interactor.GetAvailablePetsUseCase;
 
 import javax.inject.Inject;
@@ -32,7 +31,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
 
     @Override
     public void getAvailablePets() {
-        compositeDisposable.add(getAvailablePetsUseCase.run(Params.create())
+        compositeDisposable.add(getAvailablePetsUseCase.run(new GetAvailablePetsUseCase.Request())
                 .subscribe(timelineView::updateTimeline, e -> timelineView.showLoadError(), () -> {}));
     }
 }

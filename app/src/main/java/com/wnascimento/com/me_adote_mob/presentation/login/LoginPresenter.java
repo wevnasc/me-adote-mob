@@ -1,6 +1,5 @@
 package com.wnascimento.com.me_adote_mob.presentation.login;
 
-import com.wnascimento.com.me_adote_mob.domain.contract.Params;
 import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
 import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
 import com.wnascimento.com.me_adote_mob.domain.owner.interactor.LoginUserFlowableUseCase;
@@ -50,11 +49,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             loginView.showMessagePasswordNotValid();
             return;
         }
-
-        Params params = Params.create();
-        params.put(LoginUserFlowableUseCase.PARAMS_KEY_EMAIL, email);
-        params.put(LoginUserFlowableUseCase.PARAMS_KEY_PASSWORD, password);
-        loginUseCase.run(params).subscribeWith(new LoginUserObservable());
+        loginUseCase.run(new LoginUserFlowableUseCase.Request(user)).subscribeWith(new LoginUserObservable());
     }
 
 

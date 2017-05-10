@@ -1,10 +1,11 @@
 package com.wnascimento.com.me_adote_mob.presentation.addeditpet;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,12 +24,18 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.wnascimento.com.me_adote_mob.MainApplication;
 import com.wnascimento.com.me_adote_mob.R;
-import com.wnascimento.com.me_adote_mob.domain.pet.PetBuilder;
+import com.wnascimento.com.me_adote_mob.domain.pet.Pet;
+import com.wnascimento.com.me_adote_mob.presentation.timeline.TimelineActivity;
 import com.wnascimento.com.me_adote_mob.util.FileHelper;
+import com.wnascimento.com.me_adote_mob.util.ImageHelper;
 import com.wnascimento.com.me_adote_mob.util.PermissionHelper;
 
+import org.joda.time.LocalDate;
+
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -35,7 +43,6 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
 
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final String FILE_NAME_PET = "pet.jpg";
 
     private Toolbar toolbar;
     private Spinner spinnerGender;
@@ -44,31 +51,41 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
     AddEditPetPresenter presenter;
 
     private AddEditPetContract.Presenter addEditPetPresenter;
+    private TextInputLayout textInputName;
+    private TextInputLayout textInputBreed;
+    private TextInputLayout textInputDateBirth;
+    private TextInputLayout textInputWeight;
+    private TextInputLayout textInputHeight;
+    private TextInputLayout textInputNotes;
     private ImageView imagePet;
     private EditText editName;
-    private TextInputLayout textInputName;
     private EditText editBreed;
-    private TextInputLayout textInputBreed;
     private EditText editDateBirth;
-    private TextInputLayout textInputDateBirth;
     private CheckBox checkBoxAdopted;
     private EditText editWeight;
-    private TextInputLayout textInputWeight;
     private EditText editHeight;
-    private TextInputLayout textInputHeight;
     private EditText editNotes;
-    private TextInputLayout textInputNotes;
 
-    private PetBuilder petBuilder = new PetBuilder();
+    private Pet.PetBuilder petBuilder = new Pet.PetBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_pet);
+        initDagger();
         initFields();
         initListeners();
         initSpinnerGender();
         initToolbar();
+    }
+
+    private void initDagger() {
+        DaggerAddEditPetComponent.builder()
+                .mainComponent(MainApplication.mainComponent)
+                .repositoryComponent(MainApplication.repositoryComponent)
+                .addEditPetModule(new AddEditPetModule(this))
+                .build()
+                .inject(this);
     }
 
     public static void start(Context context) {
@@ -102,6 +119,8 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
 
     private void initListeners() {
         imagePet.setOnClickListener(new OnClickPicture());
+        editDateBirth.setOnClickListener(new OnClickDateBirth());
+        spinnerGender.setOnItemSelectedListener(new OnItemSelectedGender());
     }
 
     private void initSpinnerGender() {
@@ -148,7 +167,7 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
 
             try {
                 String imagePath = FileHelper.saveBitmap(this, imageBitmap);
-                imagePet.setImageURI(Uri.parse(imagePath));
+                ImageHelper.showImageCircle(this, imagePet, imagePath);
                 petBuilder.setImage(imagePath);
             } catch (IOException e) {
                 Toast.makeText(this, getString(R.string.error_saving_image), Toast.LENGTH_SHORT).show();
@@ -162,7 +181,7 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
         switch (requestCode) {
             case PermissionHelper.PERMISSIONS_REQUEST_TAKE_PICTURE: {
 
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     dispatchTakePictureIntent();
                 }
 
@@ -178,7 +197,7 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
 
     @Override
     public void goToTimeline() {
-
+        TimelineActivity.start(this);
     }
 
     @Override
@@ -207,16 +226,51 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
     }
 
 
-
     private final class OnClickPicture implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             if (PermissionHelper.hasPermissionTakePicture(AddEditPetActivity.this)) {
                 dispatchTakePictureIntent();
             } else {
-               PermissionHelper.checkTakePicturePermissionDenied(AddEditPetActivity.this);
+                PermissionHelper.checkTakePicturePermissionDenied(AddEditPetActivity.this);
             }
         }
     }
 
+    private final class OnClickDateBirth implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Calendar calendar = Calendar.getInstance();
+            @SuppressLint("WrongConstant")
+            DatePickerDialog datePickerDialog = new DatePickerDialog(AddEditPetActivity.this,
+                    (view, year, month, dayOfMonth) -> {
+                        editDateBirth.setText(String.format("%s/%s/%s", dayOfMonth, month, year));
+                        LocalDate dateBirth = new LocalDate(year, month, dayOfMonth);
+                        petBuilder.setDateBirth(dateBirth.toDate().getTime());
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.show();
+        }
+    }
+
+    private final class OnItemSelectedGender implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            petBuilder.setGender(-1);
+            if (position != 0) {
+                String[] gender = getResources().getStringArray(R.array.gender);
+                int selectedGender = gender[position].contains("Male") ? Pet.MALE : Pet.FEMALE;
+                petBuilder.setGender(selectedGender);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
 }

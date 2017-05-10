@@ -3,6 +3,8 @@ package com.wnascimento.com.me_adote_mob.domain.pet.interactor;
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.IPetRepository;
 import com.wnascimento.com.me_adote_mob.domain.contract.CompletableUseCase;
 import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.util.dagger.AndroidThread;
+import com.wnascimento.com.me_adote_mob.util.dagger.IoThread;
 
 import javax.inject.Inject;
 
@@ -14,7 +16,7 @@ public class SavePetUseCase extends CompletableUseCase<SavePetUseCase.Request> {
     private final IPetRepository petRepository;
 
     @Inject
-    protected SavePetUseCase(Scheduler threadExecutor, Scheduler threadUi, IPetRepository petRepository) {
+    protected SavePetUseCase(@IoThread Scheduler threadExecutor, @AndroidThread Scheduler threadUi, IPetRepository petRepository) {
         super(threadExecutor, threadUi);
         this.petRepository = petRepository;
     }

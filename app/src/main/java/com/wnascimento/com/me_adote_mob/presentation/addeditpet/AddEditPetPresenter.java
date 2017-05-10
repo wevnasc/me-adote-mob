@@ -4,6 +4,8 @@ package com.wnascimento.com.me_adote_mob.presentation.addeditpet;
 import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
 import com.wnascimento.com.me_adote_mob.domain.pet.interactor.SavePetUseCase;
 
+import javax.inject.Inject;
+
 import io.reactivex.CompletableObserver;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -14,6 +16,7 @@ public class AddEditPetPresenter implements AddEditPetContract.Presenter{
     private final SavePetUseCase savePetUseCase;
     private final CompositeDisposable compositeDisposable;
 
+    @Inject
     public AddEditPetPresenter(AddEditPetContract.View addEditPetView, SavePetUseCase savePetUseCase) {
         this.addEditPetView = addEditPetView;
         this.savePetUseCase = savePetUseCase;

@@ -43,7 +43,7 @@
     <string name="permission_take_picture_action">Ok</string>
     <string-array name="gender">
         <item>Gender</item>
-        <item value="0" >Male</item>
-        <item >Female</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 </resources>

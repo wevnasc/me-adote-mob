@@ -7,7 +7,7 @@ import java.util.Date;
 public class PetMother {
 
     public static IPet getPet(String id, long createdAt) {
-        return new PetBuilder()
+        return new Pet.PetBuilder()
                 .setId(id)
                 .setName("Brutos")
                 .setAdopted(false)
@@ -24,7 +24,7 @@ public class PetMother {
     }
 
     public static IPet getPet(long dateBirth) {
-        return new PetBuilder()
+        return new Pet.PetBuilder()
                 .setId("1")
                 .setName("Brutos")
                 .setAdopted(false)
@@ -41,7 +41,7 @@ public class PetMother {
     }
 
     public static IPet getPet() {
-        return new PetBuilder()
+        return new Pet.PetBuilder()
                 .setId("1")
                 .setName("Brutos")
                 .setAdopted(false)

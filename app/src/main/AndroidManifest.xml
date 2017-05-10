@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wnascimento.com.me_adote_mob">
 
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".MainApplication"
@@ -25,6 +29,8 @@
             android:launchMode="singleTop" />
         <activity android:name=".presentation.addeditpet.AddEditPetActivity"
             android:parentActivityName=".presentation.timeline.TimelineActivity" />
+
+
 
     </application>
 

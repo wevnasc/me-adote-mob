@@ -37,6 +37,10 @@
     <string name="add_edit_pet_measures">Measures</string>
     <string name="add_edit_pet_image_pet">image pet</string>
     <string name="action_save">Save</string>
+    <string name="error_saving_image">Error saving image!</string>
+    <string name="permission_take_picture_title">Permission Warning</string>
+    <string name="permission_take_picture_message">Permission of camera and writing is required</string>
+    <string name="permission_take_picture_action">Ok</string>
     <string-array name="gender">
         <item>Gender</item>
         <item value="0" >Male</item>

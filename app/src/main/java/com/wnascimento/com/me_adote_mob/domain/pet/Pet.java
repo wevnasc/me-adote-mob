@@ -1,5 +1,6 @@
 package com.wnascimento.com.me_adote_mob.domain.pet;
 
+import com.wnascimento.com.me_adote_mob.data.repository.entity.PetEntity;
 import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
 import com.wnascimento.com.me_adote_mob.domain.owner.UnregisteredOwner;
 
@@ -88,6 +89,12 @@ public class Pet implements IPet {
     @Override
     public void setOwner(IOwner owner) {
 
+    }
+
+    @Override
+    public PetEntity toEntity() {
+        return new PetEntity(id, name, image, breed, gender, notes,
+                dateBirth,adopted,weight,height,createdAt,owner.getId());
     }
 
     @Override

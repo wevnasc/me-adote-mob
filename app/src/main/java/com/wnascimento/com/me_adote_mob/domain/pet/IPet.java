@@ -1,5 +1,6 @@
 package com.wnascimento.com.me_adote_mob.domain.pet;
 
+import com.wnascimento.com.me_adote_mob.data.repository.entity.PetEntity;
 import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
 
 public interface IPet {
@@ -28,4 +29,6 @@ public interface IPet {
     IOwner getOwner();
 
     void setOwner(IOwner owner);
+
+    PetEntity toEntity();
 }

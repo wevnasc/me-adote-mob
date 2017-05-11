@@ -42,7 +42,7 @@ public class OwnerTest {
 
     @Test
     public void shouldReturnTrueIfHasPassword() throws Exception {
-        IOwner owner = Struct.getOwners().get("1");
+        IOwner owner = Struct.getOwners().get("1").toModel();
         assertTrue(owner.hasPassword());
     }
 }

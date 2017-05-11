@@ -21,6 +21,7 @@ public class AddEditPetPresenter implements AddEditPetContract.Presenter{
         this.addEditPetView = addEditPetView;
         this.savePetUseCase = savePetUseCase;
         compositeDisposable = new CompositeDisposable();
+        addEditPetView.attachPresenter(this);
     }
 
     @Override

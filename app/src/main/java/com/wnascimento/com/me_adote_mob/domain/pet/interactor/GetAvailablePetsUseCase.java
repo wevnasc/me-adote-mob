@@ -6,7 +6,6 @@ import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
 import com.wnascimento.com.me_adote_mob.util.dagger.AndroidThread;
 import com.wnascimento.com.me_adote_mob.util.dagger.IoThread;
 
-import java.util.Collections;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -28,8 +27,8 @@ public class GetAvailablePetsUseCase extends FlowableUseCase<IPet, GetAvailableP
     @Override
     protected Flowable<IPet> buildUseCase(Request request) {
         return this.petRepository.getAvailablePets()
-                .sorted(Collections.reverseOrder((p1, p2) ->
-                        new Date(p1.getCreatedAt()).compareTo(new Date(p2.getCreatedAt()))));
+                .sorted((p1, p2) ->
+                        new Date(p1.getCreatedAt()).compareTo(new Date(p2.getCreatedAt())));
     }
 
     public static final class Request extends  FlowableUseCase.Request {

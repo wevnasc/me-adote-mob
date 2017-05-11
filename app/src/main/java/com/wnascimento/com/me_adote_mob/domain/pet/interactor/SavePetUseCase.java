@@ -16,7 +16,7 @@ public class SavePetUseCase extends CompletableUseCase<SavePetUseCase.Request> {
     private final IPetRepository petRepository;
 
     @Inject
-    protected SavePetUseCase(@IoThread Scheduler threadExecutor, @AndroidThread Scheduler threadUi, IPetRepository petRepository) {
+    public SavePetUseCase(@IoThread Scheduler threadExecutor, @AndroidThread Scheduler threadUi, IPetRepository petRepository) {
         super(threadExecutor, threadUi);
         this.petRepository = petRepository;
     }

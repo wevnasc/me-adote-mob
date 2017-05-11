@@ -19,7 +19,7 @@ public class PetMother {
                 .setImage("https://images-na.ssl-images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg")
                 .setNotes("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eleifend dolor in purus consequat dictum. Morbi sed dui vel metus.")
                 .setCreatedAt(createdAt)
-                .setOwner(Struct.getOwners().get("1"))
+                .setOwner(Struct.getOwners().get("1").toModel())
                 .build();
     }
 
@@ -36,7 +36,7 @@ public class PetMother {
                 .setImage("https://images-na.ssl-images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg")
                 .setNotes("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eleifend dolor in purus consequat dictum. Morbi sed dui vel metus.")
                 .setCreatedAt(new Date().getTime())
-                .setOwner(Struct.getOwners().get("1"))
+                .setOwner(Struct.getOwners().get("1").toModel())
                 .build();
     }
 
@@ -53,7 +53,7 @@ public class PetMother {
                 .setImage("https://images-na.ssl-images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg")
                 .setNotes("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eleifend dolor in purus consequat dictum. Morbi sed dui vel metus.")
                 .setCreatedAt(new Date().getTime())
-                .setOwner(Struct.getOwners().get("1"))
+                .setOwner(Struct.getOwners().get("1").toModel())
                 .build();
     }
 

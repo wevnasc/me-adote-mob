@@ -56,7 +56,6 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
     private TextInputLayout textInputDateBirth;
     private TextInputLayout textInputWeight;
     private TextInputLayout textInputHeight;
-    private TextInputLayout textInputNotes;
     private ImageView imagePet;
     private EditText editName;
     private EditText editBreed;
@@ -79,6 +78,11 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
         initToolbar();
     }
 
+    public static void start(Context context) {
+        Intent starter = new Intent(context, AddEditPetActivity.class);
+        context.startActivity(starter);
+    }
+
     private void initDagger() {
         DaggerAddEditPetComponent.builder()
                 .mainComponent(MainApplication.mainComponent)
@@ -88,18 +92,12 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
                 .inject(this);
     }
 
-    public static void start(Context context) {
-        Intent starter = new Intent(context, AddEditPetActivity.class);
-        context.startActivity(starter);
-    }
-
     private void initFields() {
         textInputName = (TextInputLayout) findViewById(R.id.text_input_name);
         textInputBreed = (TextInputLayout) findViewById(R.id.text_input_breed);
         textInputDateBirth = (TextInputLayout) findViewById(R.id.text_input_date_birth);
         textInputWeight = (TextInputLayout) findViewById(R.id.text_input_weight);
         textInputHeight = (TextInputLayout) findViewById(R.id.text_input_height);
-        textInputNotes = (TextInputLayout) findViewById(R.id.text_input_notes);
 
         editName = (EditText) findViewById(R.id.edit_name);
         editBreed = (EditText) findViewById(R.id.edit_breed);
@@ -213,18 +211,56 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
     }
 
     private void savePet() {
-        petBuilder
-                .setName(editName.getText().toString().toLowerCase())
-                .setBreed(editBreed.getText().toString())
-                .setDateBirth(System.currentTimeMillis())
-                .setAdopted(checkBoxAdopted.isChecked())
-                .setWeight(Double.parseDouble(editWeight.getText().toString()))
-                .setHeight(Double.parseDouble(editHeight.getText().toString()))
-                .setNotes(editNotes.getText().toString());
+        if(isValidForm()) {
 
-        addEditPetPresenter.savePet(petBuilder.build());
+            petBuilder
+                    .setName(editName.getText().toString().toLowerCase())
+                    .setBreed(editBreed.getText().toString())
+                    .setDateBirth(System.currentTimeMillis())
+                    .setAdopted(checkBoxAdopted.isChecked())
+                    .setWeight(Double.parseDouble(editWeight.getText().toString()))
+                    .setHeight(Double.parseDouble(editHeight.getText().toString()))
+                    .setNotes(editNotes.getText().toString());
+
+            addEditPetPresenter.savePet(petBuilder.build());
+
+        }
+
     }
 
+    public boolean isValidForm() {
+        boolean valid = true;
+        if(editName.getText().toString().isEmpty()) {
+            textInputName.setError("The name is required");
+            valid = false;
+        }
+
+        if(editBreed.getText().toString().isEmpty()) {
+            textInputBreed.setError("The breed is required");
+            valid = false;
+        }
+
+        if(editDateBirth.getText().toString().isEmpty()) {
+            textInputDateBirth.setError("The date birth is required");
+            valid = false;
+        }
+
+        if(spinnerGender.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "the gender is required", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+
+        if(editWeight.getText().toString().isEmpty()) {
+            textInputWeight.setError("The name is required");
+            valid = false;
+        }
+
+        if(editHeight.getText().toString().isEmpty()) {
+            textInputHeight.setError("The name is required");
+            valid = false;
+        }
+        return  valid;
+    }
 
     private final class OnClickPicture implements View.OnClickListener {
         @Override
@@ -273,4 +309,5 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
 
         }
     }
+
 }

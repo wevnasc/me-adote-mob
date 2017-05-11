@@ -4,8 +4,8 @@ import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
 
 public interface IPet {
 
-    int MALE = 1;
-    int FEMALE = 0;
+    int FEMALE = 1;
+    int MALE = 2;
 
     String getId();
 
@@ -26,4 +26,6 @@ public interface IPet {
     long getCreatedAt();
 
     IOwner getOwner();
+
+    void setOwner(IOwner owner);
 }

@@ -4,7 +4,6 @@ import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
 import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
 import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
 import com.wnascimento.com.me_adote_mob.domain.pet.Pet;
-import com.wnascimento.com.me_adote_mob.domain.pet.PetBuilder;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class Struct {
 
 
         Map<String, IPet> petStruct = new HashMap<>();
-        IPet pet1 = new PetBuilder()
+        IPet pet1 = new Pet.PetBuilder()
                 .setId("1")
                 .setName("Brutos")
                 .setAdopted(false)
@@ -46,7 +45,7 @@ public class Struct {
 
         petStruct.put("1", pet1);
 
-        IPet pet2 = new PetBuilder()
+        IPet pet2 = new Pet.PetBuilder()
                 .setId("2")
                 .setName("Zinha")
                 .setAdopted(false)

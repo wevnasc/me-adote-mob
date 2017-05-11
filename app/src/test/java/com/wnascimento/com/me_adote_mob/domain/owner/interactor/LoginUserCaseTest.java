@@ -2,7 +2,6 @@ package com.wnascimento.com.me_adote_mob.domain.owner.interactor;
 
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.IOwnerRepository;
 import com.wnascimento.com.me_adote_mob.domain.ImmediateScheduler;
-import com.wnascimento.com.me_adote_mob.domain.contract.Params;
 import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
 import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
 import com.wnascimento.com.me_adote_mob.domain.owner.UnregisteredOwner;
@@ -39,13 +38,10 @@ public class LoginUserCaseTest {
     @Test
     public void shouldReturnUserNotFoundIfEmailAndPasswordNotFound() {
         TestObserver<Boolean> testObserver = TestObserver.create();
-        Params params = Params.create();
-        params.put(LoginUserFlowableUseCase.PARAMS_KEY_EMAIL, "");
-        params.put(LoginUserFlowableUseCase.PARAMS_KEY_PASSWORD, "");
 
         IOwner user = new UnregisteredOwner();
         when(ownerRepository.login(any(IOwner.class))).thenReturn(Single.just(user));
-        loginUseCase.run(params).subscribe(testObserver);
+        loginUseCase.run(new LoginUserFlowableUseCase.Request(new UnregisteredOwner())).subscribe(testObserver);
 
         testObserver.assertNoErrors();
         testObserver.assertComplete();
@@ -55,13 +51,10 @@ public class LoginUserCaseTest {
     @Test
     public void shouldReturnUserRegisteredIfUserFound() {
         TestObserver<Boolean> testObserver = TestObserver.create();
-        Params params = Params.create();
-        params.put(LoginUserFlowableUseCase.PARAMS_KEY_EMAIL, "EMAIL");
-        params.put(LoginUserFlowableUseCase.PARAMS_KEY_PASSWORD, "PASSWORD");
 
         IOwner user = new Owner("EMAIL", "PASSWORD");
         when(ownerRepository.login(any(IOwner.class))).thenReturn(Single.just(user));
-        loginUseCase.run(params).subscribe(testObserver);
+        loginUseCase.run(new LoginUserFlowableUseCase.Request(user)).subscribe(testObserver);
 
         testObserver.assertNoErrors();
         testObserver.assertComplete();

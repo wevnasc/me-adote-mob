@@ -2,15 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wnascimento.com.me_adote_mob">
 
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".MainApplication"
         android:theme="@style/AppTheme">
         <activity android:name=".presentation.login.LoginActivity">
             <intent-filter>
@@ -21,8 +25,13 @@
         </activity>
         <activity
             android:name=".presentation.timeline.TimelineActivity"
-            android:configChanges="orientation|screenSize">
-        </activity>
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop" />
+        <activity android:name=".presentation.addeditpet.AddEditPetActivity"
+            android:parentActivityName=".presentation.timeline.TimelineActivity" />
+
+
+
     </application>
 
 </manifest>

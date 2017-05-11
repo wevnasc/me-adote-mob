@@ -1,6 +1,5 @@
 package com.wnascimento.com.me_adote_mob.presentation.login;
 
-import com.wnascimento.com.me_adote_mob.domain.contract.Params;
 import com.wnascimento.com.me_adote_mob.domain.owner.interactor.LoginUserFlowableUseCase;
 
 import org.junit.Before;
@@ -34,12 +33,12 @@ public class LoginPresenterTest {
     @Test
     public void loginOpenPetsSuccess() throws Exception {
 
-        when(loginUserUseCase.run(any(Params.class)))
+        when(loginUserUseCase.run(any(LoginUserFlowableUseCase.Request.class)))
                 .thenReturn(Single.just(true));
 
         loginPresenter.login("EMAIL", "PASSWORD");
 
-        verify(loginUserUseCase).run(any(Params.class));
+        verify(loginUserUseCase).run(any(LoginUserFlowableUseCase.Request.class));
         verify(loginView).goToPets();
     }
 
@@ -59,12 +58,12 @@ public class LoginPresenterTest {
 
     @Test
     public void loginShowMessageFail() throws Exception {
-        when(loginUserUseCase.run(any(Params.class)))
+        when(loginUserUseCase.run(any(LoginUserFlowableUseCase.Request.class)))
                 .thenReturn(Single.error(new Exception("ERROR")));
 
         loginPresenter.login("EMAIL", "PASSWORD");
 
-        verify(loginUserUseCase).run(any(Params.class));
+        verify(loginUserUseCase).run(any(LoginUserFlowableUseCase.Request.class));
         verify(loginView).showMessageUserNotFound();
     }
 

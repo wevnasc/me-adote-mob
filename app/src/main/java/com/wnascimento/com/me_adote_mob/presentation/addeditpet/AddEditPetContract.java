@@ -13,7 +13,6 @@ public interface AddEditPetContract {
 
     interface View extends BaseView<Presenter> {
         void goToTimeline();
-
         void showMessageErrorSavePet();
     }
 

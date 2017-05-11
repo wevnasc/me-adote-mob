@@ -50,7 +50,7 @@ public class GetAvailablePetsUseCaseTest {
 
         getAvailablePetsUseCase.run(new GetAvailablePetsUseCase.Request()).subscribe(testSubscriber);
 
-        testSubscriber.assertValueSequence(Arrays.asList(pet3, pet2, pet1));
+        testSubscriber.assertValueSequence(Arrays.asList(pet1, pet2, pet3));
         testSubscriber.assertNoErrors();
 
     }

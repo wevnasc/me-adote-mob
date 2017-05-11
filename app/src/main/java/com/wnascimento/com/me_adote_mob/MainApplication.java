@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.DaggerRepositoryComponent;
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.RepositoryComponent;
-import com.wnascimento.com.me_adote_mob.data.repository.fake.RepositoryFakeModule;
+import com.wnascimento.com.me_adote_mob.data.repository.retrofit.RepositoryRetrofitModule;
 
 public class MainApplication extends Application {
 
@@ -20,7 +20,7 @@ public class MainApplication extends Application {
                 .build();
 
         repositoryComponent = DaggerRepositoryComponent.builder()
-                .repositoryFakeModule(new RepositoryFakeModule())
+                .repositoryRetrofitModule(new RepositoryRetrofitModule())
                 .build();
 
     }

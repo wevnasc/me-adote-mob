@@ -24,4 +24,26 @@
     <string name="msg_months">months</string>
     <string name="msg_year">year</string>
     <string name="msg_years">years</string>
+    <string name="add_edit_pet_name">Name</string>
+    <string name="add_edit_pet_overview">Overview</string>
+    <string name="add_edit_pet_breed">Breed</string>
+    <string name="add_edit_pet_date_birth">Date Birth</string>
+    <string name="add_edit_pet_adopted">Adopted</string>
+    <string name="add_edit_pet_info">Info</string>
+    <string name="add_edit_pet_weight">Weight</string>
+    <string name="add_edit_pet_height">Height</string>
+    <string name="add_edit_pet_additional_health_notes">Additional health notes</string>
+    <string name="add_edit_pet_notes">Notes</string>
+    <string name="add_edit_pet_measures">Measures</string>
+    <string name="add_edit_pet_image_pet">image pet</string>
+    <string name="action_save">Save</string>
+    <string name="error_saving_image">Error saving image!</string>
+    <string name="permission_take_picture_title">Permission Warning</string>
+    <string name="permission_take_picture_message">Permission of camera and writing is required</string>
+    <string name="permission_take_picture_action">Ok</string>
+    <string-array name="gender">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

@@ -3,7 +3,6 @@ package com.wnascimento.com.me_adote_mob.domain.pet.interactor;
 
 import com.wnascimento.com.me_adote_mob.data.repository.contracts.IPetRepository;
 import com.wnascimento.com.me_adote_mob.domain.ImmediateScheduler;
-import com.wnascimento.com.me_adote_mob.domain.contract.Params;
 import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
 import com.wnascimento.com.me_adote_mob.domain.pet.PetMother;
 
@@ -49,7 +48,7 @@ public class GetAvailablePetsUseCaseTest {
         TestSubscriber<IPet> testSubscriber = new TestSubscriber<>();
         when(petRepository.getAvailablePets()).thenReturn(Flowable.fromIterable(pets));
 
-        getAvailablePetsUseCase.run(Params.create()).subscribe(testSubscriber);
+        getAvailablePetsUseCase.run(new GetAvailablePetsUseCase.Request()).subscribe(testSubscriber);
 
         testSubscriber.assertValueSequence(Arrays.asList(pet3, pet2, pet1));
         testSubscriber.assertNoErrors();

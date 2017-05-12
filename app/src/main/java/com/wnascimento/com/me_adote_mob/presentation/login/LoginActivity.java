@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void goToPets() {
-        startActivity(TimelineActivity.startIntent(this));
+        TimelineActivity.start(this);
     }
 
 

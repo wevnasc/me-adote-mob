@@ -11,10 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.wnascimento.com.me_adote_mob.MainApplication;
 import com.wnascimento.com.me_adote_mob.R;
 import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.presentation.addeditpet.AddEditPetActivity;
 
 import java.util.ArrayList;
 
@@ -31,8 +33,9 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
 
     private TimelineContract.Presenter timelinePresenter;
 
-    public static Intent startIntent(Context context) {
-        return new Intent(context, TimelineActivity.class);
+    public static void start(Context context) {
+        Intent starter = new Intent(context, TimelineActivity.class);
+        context.startActivity(starter);
     }
 
     @Override
@@ -93,6 +96,20 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_add_pet:
+                AddEditPetActivity.start(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+    }
+
+    @Override
     public void attachPresenter(TimelineContract.Presenter presenter) {
         timelinePresenter = presenter;
     }
@@ -110,7 +127,7 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

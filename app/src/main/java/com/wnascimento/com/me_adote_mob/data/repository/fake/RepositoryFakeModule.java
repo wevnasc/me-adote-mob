@@ -11,12 +11,12 @@ public class RepositoryFakeModule {
 
     @Provides
     IOwnerRepository getOwnerFakeRepository() {
-        return new OwnerFakeRepository();
+        return OwnerFakeRepository.getInstance();
     }
 
     @Provides
     IPetRepository getPetFakeRepository() {
-        return new PetFakeRepository();
+        return PetFakeRepository.getInstance();
     }
 
 }

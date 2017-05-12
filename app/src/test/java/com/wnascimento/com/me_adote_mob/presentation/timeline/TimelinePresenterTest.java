@@ -1,14 +1,15 @@
 package com.wnascimento.com.me_adote_mob.presentation.timeline;
 
-import com.wnascimento.com.me_adote_mob.domain.contract.Params;
+import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
 import com.wnascimento.com.me_adote_mob.domain.pet.Pet;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetMother;
 import com.wnascimento.com.me_adote_mob.domain.pet.interactor.GetAvailablePetsUseCase;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -37,25 +38,21 @@ public class TimelinePresenterTest {
 
     @Test
     public void showAllAvailablePetsSuccess() {
-        when(getAvailablePetsUseCase.run(any(Params.class))).thenReturn(Flowable.fromIterable(getAvailablePets()));
+        List<IPet> pets = Arrays.asList(PetMother.getPet(), PetMother.getPet());
+        when(getAvailablePetsUseCase.run(any(GetAvailablePetsUseCase.Request.class))).thenReturn(Flowable.fromIterable(pets));
 
         timelinePresenter.getAvailablePets();
 
-        verify(getAvailablePetsUseCase).run(any(Params.class));
+        verify(getAvailablePetsUseCase).run(any(GetAvailablePetsUseCase.Request.class));
         verify(timelineView, atMost(3)).updateTimeline(any(Pet.class));
     }
 
     @Test
     public void showAllAvailablePetsError() {
-        when(getAvailablePetsUseCase.run(any(Params.class))).thenReturn(Flowable.error(new Exception("ERROR")));
+        when(getAvailablePetsUseCase.run(any(GetAvailablePetsUseCase.Request.class))).thenReturn(Flowable.error(new Exception("ERROR")));
         timelinePresenter.getAvailablePets();
 
-        verify(getAvailablePetsUseCase).run(any(Params.class));
+        verify(getAvailablePetsUseCase).run(any(GetAvailablePetsUseCase.Request.class));
         verify(timelineView).showLoadError();
-    }
-
-    private List<Pet> getAvailablePets() {
-        List<Pet> pets = new ArrayList<>();
-        return pets;
     }
 }

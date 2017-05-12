@@ -1,7 +1,7 @@
 package com.wnascimento.com.me_adote_mob.data.repository.fake;
 
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.IOwnerRepository;
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.IPetRepository;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.OwnerRepositoryContract;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.PetRepositoryContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -10,13 +10,13 @@ import dagger.Provides;
 public class RepositoryFakeModule {
 
     @Provides
-    IOwnerRepository getOwnerFakeRepository() {
-        return new OwnerFakeRepository();
+    OwnerRepositoryContract getOwnerFakeRepository() {
+        return OwnerFakeRepository.getInstance();
     }
 
     @Provides
-    IPetRepository getPetFakeRepository() {
-        return new PetFakeRepository();
+    PetRepositoryContract getPetFakeRepository() {
+        return PetFakeRepository.getInstance();
     }
 
 }

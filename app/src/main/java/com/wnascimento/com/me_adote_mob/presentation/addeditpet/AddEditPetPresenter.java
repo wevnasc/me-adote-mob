@@ -1,7 +1,7 @@
 package com.wnascimento.com.me_adote_mob.presentation.addeditpet;
 
 
-import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetContract;
 import com.wnascimento.com.me_adote_mob.domain.pet.interactor.SavePetUseCase;
 
 import javax.inject.Inject;
@@ -21,6 +21,7 @@ public class AddEditPetPresenter implements AddEditPetContract.Presenter{
         this.addEditPetView = addEditPetView;
         this.savePetUseCase = savePetUseCase;
         compositeDisposable = new CompositeDisposable();
+        addEditPetView.attachPresenter(this);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class AddEditPetPresenter implements AddEditPetContract.Presenter{
     }
 
     @Override
-    public void savePet(IPet pet) {
+    public void savePet(PetContract pet) {
         savePetUseCase.run(new SavePetUseCase.Request(pet)).subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(Disposable disposable) {

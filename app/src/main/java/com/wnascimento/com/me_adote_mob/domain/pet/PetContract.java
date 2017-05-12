@@ -1,8 +1,9 @@
 package com.wnascimento.com.me_adote_mob.domain.pet;
 
-import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
+import com.wnascimento.com.me_adote_mob.data.entity.PetEntity;
+import com.wnascimento.com.me_adote_mob.domain.owner.OwnerContract;
 
-public interface IPet {
+public interface PetContract {
 
     int FEMALE = 1;
     int MALE = 2;
@@ -25,7 +26,9 @@ public interface IPet {
 
     long getCreatedAt();
 
-    IOwner getOwner();
+    OwnerContract getOwner();
 
-    void setOwner(IOwner owner);
+    void setOwner(OwnerContract owner);
+
+    PetEntity toEntity();
 }

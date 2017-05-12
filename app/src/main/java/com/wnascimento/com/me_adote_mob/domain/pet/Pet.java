@@ -1,11 +1,12 @@
 package com.wnascimento.com.me_adote_mob.domain.pet;
 
-import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
+import com.wnascimento.com.me_adote_mob.data.entity.PetEntity;
+import com.wnascimento.com.me_adote_mob.domain.owner.OwnerContract;
 import com.wnascimento.com.me_adote_mob.domain.owner.UnregisteredOwner;
 
 import org.joda.time.LocalDate;
 
-public class Pet implements IPet {
+public class Pet implements PetContract {
 
     private final String id;
     private final String name;
@@ -18,7 +19,7 @@ public class Pet implements IPet {
     private final double weight;
     private final double height;
     private final long createdAt;
-    private final IOwner owner;
+    private OwnerContract owner;
 
     private Pet(PetBuilder petBuilder) {
         this.id = petBuilder.id == null ? "" : petBuilder.id;
@@ -81,13 +82,19 @@ public class Pet implements IPet {
     }
 
     @Override
-    public IOwner getOwner() {
+    public OwnerContract getOwner() {
         return owner;
     }
 
     @Override
-    public void setOwner(IOwner owner) {
+    public void setOwner(OwnerContract owner) {
+        this.owner = owner;
+    }
 
+    @Override
+    public PetEntity toEntity() {
+        return new PetEntity(id, name, image, breed, gender, notes,
+                dateBirth,adopted,weight,height,createdAt,Long.parseLong(owner.getId()));
     }
 
     @Override
@@ -112,7 +119,7 @@ public class Pet implements IPet {
         private double weight;
         private double height;
         private long createdAt;
-        private IOwner owner;
+        private OwnerContract owner;
 
         public PetBuilder setId(String id) {
             this.id = id;
@@ -169,7 +176,7 @@ public class Pet implements IPet {
             return this;
         }
 
-        public PetBuilder setOwner(IOwner owner) {
+        public PetBuilder setOwner(OwnerContract owner) {
             this.owner = owner;
             return this;
         }

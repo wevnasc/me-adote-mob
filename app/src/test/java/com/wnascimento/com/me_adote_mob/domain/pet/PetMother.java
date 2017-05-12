@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class PetMother {
 
-    public static IPet getPet(String id, long createdAt) {
+    public static PetContract getPet(String id, long createdAt) {
         return new Pet.PetBuilder()
                 .setId(id)
                 .setName("Brutos")
@@ -19,11 +19,11 @@ public class PetMother {
                 .setImage("https://images-na.ssl-images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg")
                 .setNotes("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eleifend dolor in purus consequat dictum. Morbi sed dui vel metus.")
                 .setCreatedAt(createdAt)
-                .setOwner(Struct.getOwners().get("1"))
+                .setOwner(Struct.getOwners().get("1").toModel())
                 .build();
     }
 
-    public static IPet getPet(long dateBirth) {
+    public static PetContract getPet(long dateBirth) {
         return new Pet.PetBuilder()
                 .setId("1")
                 .setName("Brutos")
@@ -36,11 +36,11 @@ public class PetMother {
                 .setImage("https://images-na.ssl-images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg")
                 .setNotes("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eleifend dolor in purus consequat dictum. Morbi sed dui vel metus.")
                 .setCreatedAt(new Date().getTime())
-                .setOwner(Struct.getOwners().get("1"))
+                .setOwner(Struct.getOwners().get("1").toModel())
                 .build();
     }
 
-    public static IPet getPet() {
+    public static PetContract getPet() {
         return new Pet.PetBuilder()
                 .setId("1")
                 .setName("Brutos")
@@ -53,7 +53,7 @@ public class PetMother {
                 .setImage("https://images-na.ssl-images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg")
                 .setNotes("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eleifend dolor in purus consequat dictum. Morbi sed dui vel metus.")
                 .setCreatedAt(new Date().getTime())
-                .setOwner(Struct.getOwners().get("1"))
+                .setOwner(Struct.getOwners().get("1").toModel())
                 .build();
     }
 

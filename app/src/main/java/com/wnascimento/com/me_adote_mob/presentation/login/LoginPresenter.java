@@ -1,6 +1,6 @@
 package com.wnascimento.com.me_adote_mob.presentation.login;
 
-import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
+import com.wnascimento.com.me_adote_mob.domain.owner.OwnerContract;
 import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
 import com.wnascimento.com.me_adote_mob.domain.owner.interactor.LoginUserFlowableUseCase;
 
@@ -39,7 +39,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login(String email, String password) {
-        IOwner user = new Owner(email, password);
+        OwnerContract user = new Owner(email, password);
 
         if (!user.hasEmail()) {
             loginView.showMessageEmailNotValid();
@@ -70,6 +70,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         @Override
         public void onError(Throwable t) {
+            t.printStackTrace();
             loginView.showMessageUserNotFound();
         }
 

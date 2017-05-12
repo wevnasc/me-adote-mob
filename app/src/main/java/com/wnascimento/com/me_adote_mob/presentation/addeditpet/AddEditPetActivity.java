@@ -203,31 +203,6 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
 
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
-    private void savePet() {
-        if(isValidForm()) {
-
-            petBuilder
-                    .setName(editName.getText().toString().toLowerCase())
-                    .setBreed(editBreed.getText().toString())
-                    .setDateBirth(System.currentTimeMillis())
-                    .setAdopted(checkBoxAdopted.isChecked())
-                    .setWeight(Double.parseDouble(editWeight.getText().toString()))
-                    .setHeight(Double.parseDouble(editHeight.getText().toString()))
-                    .setNotes(editNotes.getText().toString());
-
-            addEditPetPresenter.savePet(petBuilder.build());
-
-        }
-
-    }
-
     public boolean isValidForm() {
         boolean valid = true;
         if(editName.getText().toString().isEmpty()) {
@@ -260,6 +235,31 @@ public class AddEditPetActivity extends AppCompatActivity implements AddEditPetC
             valid = false;
         }
         return  valid;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    private void savePet() {
+        if(isValidForm()) {
+
+            petBuilder
+                    .setName(editName.getText().toString().toLowerCase())
+                    .setBreed(editBreed.getText().toString())
+                    .setDateBirth(System.currentTimeMillis())
+                    .setAdopted(checkBoxAdopted.isChecked())
+                    .setWeight(Double.parseDouble(editWeight.getText().toString()))
+                    .setHeight(Double.parseDouble(editHeight.getText().toString()))
+                    .setNotes(editNotes.getText().toString());
+
+            addEditPetPresenter.savePet(petBuilder.build());
+
+        }
+
     }
 
     private final class OnClickPicture implements View.OnClickListener {

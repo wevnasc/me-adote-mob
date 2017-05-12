@@ -1,8 +1,8 @@
 package com.wnascimento.com.me_adote_mob.domain.owner.interactor;
 
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.IOwnerRepository;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.OwnerRepositoryContract;
 import com.wnascimento.com.me_adote_mob.domain.ImmediateScheduler;
-import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
+import com.wnascimento.com.me_adote_mob.domain.owner.OwnerContract;
 import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
 import com.wnascimento.com.me_adote_mob.domain.owner.UnregisteredOwner;
 
@@ -26,7 +26,7 @@ public class LoginUserCaseTest {
     public static final ImmediateScheduler schedulers = new ImmediateScheduler();
 
     @Mock
-    private IOwnerRepository ownerRepository;
+    private OwnerRepositoryContract ownerRepository;
     private LoginUserFlowableUseCase loginUseCase;
 
     @Before
@@ -39,8 +39,8 @@ public class LoginUserCaseTest {
     public void shouldReturnUserNotFoundIfEmailAndPasswordNotFound() {
         TestObserver<Boolean> testObserver = TestObserver.create();
 
-        IOwner user = new UnregisteredOwner();
-        when(ownerRepository.login(any(IOwner.class))).thenReturn(Single.just(user));
+        OwnerContract user = new UnregisteredOwner();
+        when(ownerRepository.login(any(OwnerContract.class))).thenReturn(Single.just(user));
         loginUseCase.run(new LoginUserFlowableUseCase.Request(new UnregisteredOwner())).subscribe(testObserver);
 
         testObserver.assertNoErrors();
@@ -52,8 +52,8 @@ public class LoginUserCaseTest {
     public void shouldReturnUserRegisteredIfUserFound() {
         TestObserver<Boolean> testObserver = TestObserver.create();
 
-        IOwner user = new Owner("EMAIL", "PASSWORD");
-        when(ownerRepository.login(any(IOwner.class))).thenReturn(Single.just(user));
+        OwnerContract user = new Owner("EMAIL", "PASSWORD");
+        when(ownerRepository.login(any(OwnerContract.class))).thenReturn(Single.just(user));
         loginUseCase.run(new LoginUserFlowableUseCase.Request(user)).subscribe(testObserver);
 
         testObserver.assertNoErrors();

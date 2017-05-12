@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class PetMother {
 
-    public static IPet getPet(String id, long createdAt) {
+    public static PetContract getPet(String id, long createdAt) {
         return new Pet.PetBuilder()
                 .setId(id)
                 .setName("Brutos")
@@ -23,7 +23,7 @@ public class PetMother {
                 .build();
     }
 
-    public static IPet getPet(long dateBirth) {
+    public static PetContract getPet(long dateBirth) {
         return new Pet.PetBuilder()
                 .setId("1")
                 .setName("Brutos")
@@ -40,7 +40,7 @@ public class PetMother {
                 .build();
     }
 
-    public static IPet getPet() {
+    public static PetContract getPet() {
         return new Pet.PetBuilder()
                 .setId("1")
                 .setName("Brutos")

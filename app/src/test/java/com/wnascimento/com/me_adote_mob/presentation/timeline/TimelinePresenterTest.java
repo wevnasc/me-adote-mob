@@ -1,6 +1,6 @@
 package com.wnascimento.com.me_adote_mob.presentation.timeline;
 
-import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetContract;
 import com.wnascimento.com.me_adote_mob.domain.pet.Pet;
 import com.wnascimento.com.me_adote_mob.domain.pet.PetMother;
 import com.wnascimento.com.me_adote_mob.domain.pet.interactor.GetAvailablePetsUseCase;
@@ -38,7 +38,7 @@ public class TimelinePresenterTest {
 
     @Test
     public void showAllAvailablePetsSuccess() {
-        List<IPet> pets = Arrays.asList(PetMother.getPet(), PetMother.getPet());
+        List<PetContract> pets = Arrays.asList(PetMother.getPet(), PetMother.getPet());
         when(getAvailablePetsUseCase.run(any(GetAvailablePetsUseCase.Request.class))).thenReturn(Flowable.fromIterable(pets));
 
         timelinePresenter.getAvailablePets();

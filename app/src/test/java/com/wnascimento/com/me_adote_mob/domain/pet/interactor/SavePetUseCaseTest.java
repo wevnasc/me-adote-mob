@@ -1,8 +1,8 @@
 package com.wnascimento.com.me_adote_mob.domain.pet.interactor;
 
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.IPetRepository;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.PetRepositoryContract;
 import com.wnascimento.com.me_adote_mob.domain.ImmediateScheduler;
-import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetContract;
 import com.wnascimento.com.me_adote_mob.domain.pet.PetMother;
 
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class SavePetUseCaseTest {
     public static final ImmediateScheduler schedulers = new ImmediateScheduler();
 
     @Mock
-    private IPetRepository petRepository;
+    private PetRepositoryContract petRepository;
 
     private SavePetUseCase savePetUseCase;
 
@@ -39,7 +39,7 @@ public class SavePetUseCaseTest {
     @Test
     public void shouldReturnSuccessWhenSave() {
 
-        when(petRepository.save(any(IPet.class)))
+        when(petRepository.save(any(PetContract.class)))
                 .thenReturn(Completable.complete());
 
         TestObserver testObserver = TestObserver.create();

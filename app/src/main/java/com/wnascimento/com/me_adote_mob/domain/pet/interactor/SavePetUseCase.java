@@ -1,8 +1,9 @@
 package com.wnascimento.com.me_adote_mob.domain.pet.interactor;
 
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.IPetRepository;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.PetRepositoryContract;
 import com.wnascimento.com.me_adote_mob.domain.contract.CompletableUseCase;
-import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetContract;
 import com.wnascimento.com.me_adote_mob.util.dagger.AndroidThread;
 import com.wnascimento.com.me_adote_mob.util.dagger.IoThread;
 
@@ -13,28 +14,30 @@ import io.reactivex.Scheduler;
 
 public class SavePetUseCase extends CompletableUseCase<SavePetUseCase.Request> {
 
-    private final IPetRepository petRepository;
+    private final PetRepositoryContract petRepository;
 
     @Inject
-    public SavePetUseCase(@IoThread Scheduler threadExecutor, @AndroidThread Scheduler threadUi, IPetRepository petRepository) {
+    public SavePetUseCase(@IoThread Scheduler threadExecutor, @AndroidThread Scheduler threadUi, PetRepositoryContract petRepository) {
         super(threadExecutor, threadUi);
         this.petRepository = petRepository;
     }
 
     @Override
     protected Completable buildUseCase(Request request) {
-        return petRepository.save(request.getPet());
+        PetContract pet = request.getPet();
+        pet.setOwner(new Owner("1", "", "" ,"" ,""));
+        return petRepository.save(pet);
     }
 
     public static final class Request extends CompletableUseCase.Request{
 
-        IPet pet;
+        PetContract pet;
 
-        public Request(IPet pet) {
+        public Request(PetContract pet) {
             this.pet = pet;
         }
 
-        public IPet getPet() {
+        public PetContract getPet() {
             return pet;
         }
     }

@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import com.wnascimento.com.me_adote_mob.MainApplication;
 import com.wnascimento.com.me_adote_mob.R;
-import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetContract;
 import com.wnascimento.com.me_adote_mob.presentation.addeditpet.AddEditPetActivity;
 
 import java.util.ArrayList;
@@ -80,7 +80,6 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
         recyclerViewTimeline.setHasFixedSize(true);
         recyclerViewTimeline.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewTimeline.setAdapter(timelineAdapter);
-        timelinePresenter.getAvailablePets();
     }
 
     @Override
@@ -132,12 +131,17 @@ public class TimelineActivity extends AppCompatActivity implements TimelineContr
     }
 
     @Override
-    public void updateTimeline(IPet pet) {
+    public void updateTimeline(PetContract pet) {
         timelineAdapter.updateList(pet);
     }
 
     @Override
     public void showLoadError() {
 
+    }
+
+    @Override
+    public void cleanTimeline() {
+        timelineAdapter.cleanList();
     }
 }

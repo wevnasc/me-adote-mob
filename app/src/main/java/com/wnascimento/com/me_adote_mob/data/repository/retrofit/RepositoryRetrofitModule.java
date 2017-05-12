@@ -2,11 +2,15 @@ package com.wnascimento.com.me_adote_mob.data.repository.retrofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.IOwnerRepository;
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.IPetRepository;
-import com.wnascimento.com.me_adote_mob.data.repository.entity.OwnerEntity;
-import com.wnascimento.com.me_adote_mob.data.repository.entity.PetEntity;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.OwnerRepositoryContract;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.PetRepositoryContract;
+import com.wnascimento.com.me_adote_mob.data.entity.OwnerEntity;
+import com.wnascimento.com.me_adote_mob.data.entity.PetEntity;
+import com.wnascimento.com.me_adote_mob.data.repository.retrofit.client.Deserializer;
+import com.wnascimento.com.me_adote_mob.data.repository.retrofit.client.IOwnerClient;
+import com.wnascimento.com.me_adote_mob.data.repository.retrofit.client.IPetClient;
+
+import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
@@ -32,6 +36,7 @@ public class RepositoryRetrofitModule {
     Gson getGson() {
         return new GsonBuilder()
                 .registerTypeAdapter(OwnerEntity.class, new Deserializer<OwnerEntity>())
+                .registerTypeAdapter(List.class, new Deserializer<List<PetEntity>>())
                 .registerTypeAdapter(PetEntity.class, new Deserializer<PetEntity>())
                 .create();
     }
@@ -40,8 +45,7 @@ public class RepositoryRetrofitModule {
     Retrofit.Builder getRetrofitBuilder(Gson gson) {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create(gson));
     }
 
     @Provides
@@ -60,12 +64,12 @@ public class RepositoryRetrofitModule {
     }
 
     @Provides
-    IPetRepository getPetRepository(IPetClient petClient) {
-        return new PetRetrofitRepository(petClient);
+    PetRepositoryContract getPetRepository(IPetClient petClient, OwnerRepositoryContract ownerRepository) {
+        return new PetRetrofitRepository(petClient, ownerRepository);
     }
 
     @Provides
-    IOwnerRepository getOwnersRepository(IOwnerClient ownerClient) {
+    OwnerRepositoryContract getOwnersRepository(IOwnerClient ownerClient) {
         return new OwnerRetrofitRepository(ownerClient);
     }
 

@@ -1,10 +1,13 @@
-package com.wnascimento.com.me_adote_mob.data.repository.entity;
+package com.wnascimento.com.me_adote_mob.data.entity;
 
-import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
-import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.domain.owner.OwnerContract;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetContract;
 import com.wnascimento.com.me_adote_mob.domain.pet.Pet;
 
-public class PetEntity {
+import java.io.Serializable;
+
+
+public class PetEntity implements Serializable {
 
     private String id;
     private String name;
@@ -17,10 +20,12 @@ public class PetEntity {
     private double weight;
     private double height;
     private long createdAt;
-    private String ownerId;
+    private long ownerId;
+
+
 
     public PetEntity(String id, String name, String image, String breed, int gender, String notes,
-                     long dateBirth, boolean adopted, double weight, double height, long createdAt, String ownerId) {
+                     long dateBirth, boolean adopted, double weight, double height, long createdAt, long ownerId) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -123,15 +128,15 @@ public class PetEntity {
         this.createdAt = createdAt;
     }
 
-    public String getOwnerId() {
+    public long getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(String ownerId) {
+    public void setOwnerId(long ownerId) {
         this.ownerId = ownerId;
     }
 
-    public IPet toModel(IOwner owner) {
+    public PetContract toModel(OwnerContract owner) {
         return new Pet.PetBuilder()
                 .setId(id)
                 .setName(name)
@@ -146,5 +151,23 @@ public class PetEntity {
                 .setOwner(owner)
                 .setCreatedAt(createdAt)
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        return "PetEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", breed='" + breed + '\'' +
+                ", gender=" + gender +
+                ", notes='" + notes + '\'' +
+                ", dateBirth=" + dateBirth +
+                ", adopted=" + adopted +
+                ", weight=" + weight +
+                ", height=" + height +
+                ", createdAt=" + createdAt +
+                ", ownerId='" + ownerId + '\'' +
+                '}';
     }
 }

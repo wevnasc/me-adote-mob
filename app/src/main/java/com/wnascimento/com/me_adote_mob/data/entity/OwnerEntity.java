@@ -1,9 +1,11 @@
-package com.wnascimento.com.me_adote_mob.data.repository.entity;
+package com.wnascimento.com.me_adote_mob.data.entity;
 
-import com.wnascimento.com.me_adote_mob.domain.owner.IOwner;
+import com.wnascimento.com.me_adote_mob.domain.owner.OwnerContract;
 import com.wnascimento.com.me_adote_mob.domain.owner.Owner;
 
-public class OwnerEntity {
+import java.io.Serializable;
+
+public class OwnerEntity implements Serializable {
 
     private String id;
     private String email;
@@ -70,7 +72,7 @@ public class OwnerEntity {
         return password != null ? password.equals(that.password) : that.password == null;
     }
 
-    public IOwner toModel(){
+    public OwnerContract toModel(){
         return new Owner(id, email, password, name, image);
     }
 }

@@ -1,8 +1,8 @@
 package com.wnascimento.com.me_adote_mob.data.repository.fake;
 
-import com.wnascimento.com.me_adote_mob.data.repository.entity.OwnerEntity;
-import com.wnascimento.com.me_adote_mob.data.repository.entity.PetEntity;
-import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.data.entity.OwnerEntity;
+import com.wnascimento.com.me_adote_mob.data.entity.PetEntity;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetContract;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -24,27 +24,27 @@ public class Struct {
                 "Brutos",
                 "https://www.cesarsway.com/sites/newcesarsway/files/styles/large_article_preview/public/Common-dog-behaviors-explained.jpg?itok=FSzwbBoi",
                 "vira lata",
-                IPet.MALE,
+                PetContract.MALE,
                 "",
                 Calendar.getInstance().getTimeInMillis(),
                 false,
                 1,
                 1,
                 Calendar.getInstance().getTimeInMillis(),
-                "1"));
+                1));
 
         petStruct.put("2", new PetEntity("2",
                 "Scoob",
                 "http://www.hillspet.com/HillsPetUS/v1/portal/en/us/cat-care/images/HP_PCC_md_0130_cat53.jpg",
                 "vira lata",
-                IPet.MALE,
+                PetContract.MALE,
                 "",
                 Calendar.getInstance().getTimeInMillis(),
                 false,
                 1,
                 1,
                 Calendar.getInstance().getTimeInMillis(),
-                "1"));
+                1));
 
         return petStruct;
     }

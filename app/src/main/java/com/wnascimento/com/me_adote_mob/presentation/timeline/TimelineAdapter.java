@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wnascimento.com.me_adote_mob.R;
-import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetContract;
 import com.wnascimento.com.me_adote_mob.util.DateHelper;
 import com.wnascimento.com.me_adote_mob.util.ImageHelper;
 import com.wnascimento.com.me_adote_mob.util.MeasuresHelper;
@@ -19,9 +19,9 @@ import java.util.List;
 
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHolder> {
 
-    private List<IPet> timeline;
+    private List<PetContract> timeline;
 
-    public TimelineAdapter(List<IPet> timeline) {
+    public TimelineAdapter(List<PetContract> timeline) {
         this.timeline = timeline;
     }
 
@@ -36,16 +36,16 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        IPet pet = timeline.get(position);
+        PetContract pet = timeline.get(position);
 
         ImageHelper.showImageCircle(context, holder.imageOwner, pet.getOwner().getImage());
         ImageHelper.showImage(context, holder.imagePet, pet.getImage());
 
         switch (pet.getGender()) {
-            case IPet.MALE:
+            case PetContract.MALE:
                 holder.imageGender.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_gender_male));
                 break;
-            case IPet.FEMALE:
+            case PetContract.FEMALE:
                 holder.imageGender.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_gender_female));
                 break;
         }
@@ -64,15 +64,19 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         return timeline != null ? timeline.size() : 0;
     }
 
-    public void updateList(IPet pet) {
+    public void updateList(PetContract pet) {
         insertItem(pet);
     }
 
-    private void insertItem(IPet pet) {
-        if (!timeline.contains(pet)) {
-            timeline.add(pet);
-            notifyItemInserted(getItemCount());
-        }
+    private void insertItem(PetContract pet) {
+        timeline.add(pet);
+        notifyItemInserted(getItemCount());
+    }
+
+    public void cleanList() {
+        int size = timeline.size();
+        timeline.clear();
+        notifyItemRangeRemoved(0, size);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -22,6 +22,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
 
     @Override
     public void reload() {
+        getAvailablePets();
     }
 
     @Override
@@ -31,6 +32,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
 
     @Override
     public void getAvailablePets() {
+        timelineView.cleanTimeline();
         compositeDisposable.add(getAvailablePetsUseCase.run(new GetAvailablePetsUseCase.Request())
                 .subscribe(timelineView::updateTimeline, e -> timelineView.showLoadError(), () -> {}));
     }

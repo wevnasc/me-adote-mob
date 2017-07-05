@@ -2,8 +2,8 @@ package com.wnascimento.com.me_adote_mob;
 
 import android.app.Application;
 
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.DaggerRepositoryComponent;
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.RepositoryComponent;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.DaggerRepositoryComponent;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.RepositoryComponent;
 import com.wnascimento.com.me_adote_mob.data.repository.fake.RepositoryFakeModule;
 
 public class MainApplication extends Application {

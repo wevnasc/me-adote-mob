@@ -1,6 +1,8 @@
 package com.wnascimento.com.me_adote_mob.domain.owner;
 
-public class UnregisteredOwner implements IOwner {
+import com.wnascimento.com.me_adote_mob.data.entity.OwnerEntity;
+
+public class UnregisteredOwner implements OwnerContract {
 
     @Override
     public String getId() {
@@ -40,5 +42,10 @@ public class UnregisteredOwner implements IOwner {
     @Override
     public boolean hasRegistred() {
         return false;
+    }
+
+    @Override
+    public OwnerEntity toEntity() {
+        return new OwnerEntity("","", "", "", "");
     }
 }

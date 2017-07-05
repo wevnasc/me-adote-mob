@@ -1,14 +1,9 @@
 package com.wnascimento.com.me_adote_mob.domain.contract;
 
-import com.wnascimento.com.me_adote_mob.util.dagger.AndroidThread;
-import com.wnascimento.com.me_adote_mob.util.dagger.IoThread;
-
-import javax.inject.Inject;
-
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 
-public abstract class SingleUseCase<T> {
+public abstract class SingleUseCase<T, R extends SingleUseCase.Request> {
 
     private final Scheduler threadExecutor;
     private final Scheduler threadUi;
@@ -18,13 +13,17 @@ public abstract class SingleUseCase<T> {
         this.threadUi = threadUi;
     }
 
-    public Single<T> run(Params params) {
-        return buildUseCase(params)
+    public Single<T> run(R request) {
+        return buildUseCase(request)
                 .observeOn(threadUi)
                 .subscribeOn(threadExecutor);
 
     }
 
-    protected abstract Single<T> buildUseCase(Params params);
+    protected abstract Single<T> buildUseCase(R request);
+
+    public static class Request {
+
+    }
 
 }

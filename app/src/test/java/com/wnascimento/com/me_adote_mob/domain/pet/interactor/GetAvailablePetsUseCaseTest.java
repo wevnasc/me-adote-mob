@@ -1,10 +1,9 @@
 package com.wnascimento.com.me_adote_mob.domain.pet.interactor;
 
 
-import com.wnascimento.com.me_adote_mob.data.repository.contracts.IPetRepository;
+import com.wnascimento.com.me_adote_mob.data.repository.contract.PetRepositoryContract;
 import com.wnascimento.com.me_adote_mob.domain.ImmediateScheduler;
-import com.wnascimento.com.me_adote_mob.domain.contract.Params;
-import com.wnascimento.com.me_adote_mob.domain.pet.IPet;
+import com.wnascimento.com.me_adote_mob.domain.pet.PetContract;
 import com.wnascimento.com.me_adote_mob.domain.pet.PetMother;
 
 import org.junit.Before;
@@ -29,7 +28,7 @@ public class GetAvailablePetsUseCaseTest {
     public static final ImmediateScheduler schedulers = new ImmediateScheduler();
 
     @Mock
-    private IPetRepository petRepository;
+    private PetRepositoryContract petRepository;
 
     private GetAvailablePetsUseCase getAvailablePetsUseCase;
 
@@ -41,17 +40,17 @@ public class GetAvailablePetsUseCaseTest {
 
     @Test
     public void shouldReturnAllAvailablePetInOrderDescWithRandomDateCreated() {
-        IPet pet1 = PetMother.getPet("1", 1494253426);
-        IPet pet2 = PetMother.getPet("2", 1494253435);
-        IPet pet3 = PetMother.getPet("3", 1494253443);
-        List<IPet> pets = Arrays.asList(pet1, pet2, pet3);
+        PetContract pet1 = PetMother.getPet("1", 1494253426);
+        PetContract pet2 = PetMother.getPet("2", 1494253435);
+        PetContract pet3 = PetMother.getPet("3", 1494253443);
+        List<PetContract> pets = Arrays.asList(pet1, pet2, pet3);
 
-        TestSubscriber<IPet> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<PetContract> testSubscriber = new TestSubscriber<>();
         when(petRepository.getAvailablePets()).thenReturn(Flowable.fromIterable(pets));
 
-        getAvailablePetsUseCase.run(Params.create()).subscribe(testSubscriber);
+        getAvailablePetsUseCase.run(new GetAvailablePetsUseCase.Request()).subscribe(testSubscriber);
 
-        testSubscriber.assertValueSequence(Arrays.asList(pet3, pet2, pet1));
+        testSubscriber.assertValueSequence(Arrays.asList(pet1, pet2, pet3));
         testSubscriber.assertNoErrors();
 
     }

@@ -1,6 +1,8 @@
 package com.wnascimento.com.me_adote_mob.domain.owner;
 
-public class Owner implements IOwner {
+import com.wnascimento.com.me_adote_mob.data.entity.OwnerEntity;
+
+public class Owner implements OwnerContract {
 
     private final String id;
     private final String email;
@@ -58,6 +60,11 @@ public class Owner implements IOwner {
     @Override
     public boolean hasRegistred() {
         return hasEmail() && hasPassword();
+    }
+
+    @Override
+    public OwnerEntity toEntity() {
+        return new OwnerEntity(id, email,password, name, image);
     }
 
     @Override

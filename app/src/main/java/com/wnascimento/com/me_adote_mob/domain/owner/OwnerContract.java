@@ -1,6 +1,8 @@
 package com.wnascimento.com.me_adote_mob.domain.owner;
 
-public interface IOwner {
+import com.wnascimento.com.me_adote_mob.data.entity.OwnerEntity;
+
+public interface OwnerContract {
 
     public String getId();
 
@@ -17,5 +19,7 @@ public interface IOwner {
     public boolean hasPassword();
 
     public boolean hasRegistred();
+
+    public OwnerEntity toEntity();
 
 }

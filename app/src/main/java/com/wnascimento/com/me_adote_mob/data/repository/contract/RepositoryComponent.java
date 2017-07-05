@@ -1,10 +1,10 @@
 package com.wnascimento.com.me_adote_mob.data.repository.contract;
 
-import com.wnascimento.com.me_adote_mob.data.repository.retrofit.RepositoryRetrofitModule;
+import com.wnascimento.com.me_adote_mob.data.repository.fake.RepositoryFakeModule;
 
 import dagger.Component;
 
-@Component(modules = RepositoryRetrofitModule.class)
+@Component(modules = RepositoryFakeModule.class)
 public interface RepositoryComponent {
 
     OwnerRepositoryContract getOwnerRepository();
